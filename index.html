@@ -1,0 +1,2329 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRM Zenith Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#1F4E78;--nl:#2E75B6;--nd:#0d2d47;
+  --bg:#F4F6FA;--sf:#fff;--bd:#E2E8F0;
+  --tx:#1a2332;--mu:#64748B;--lt:#94A3B8;
+  --s-bg:#f0fdf4;--s-bd:#bbf7d0;--s-tx:#16a34a;
+  --w-bg:#fffbeb;--w-bd:#fde68a;--w-tx:#92400e;
+  --d-bg:#fef2f2;--d-bd:#fecaca;--d-tx:#b91c1c;
+  --r:10px;--rl:14px;
+  --sh:0 1px 3px rgba(0,0,0,.08);
+  --shl:0 6px 24px rgba(0,0,0,.13);
+}
+body{font-family:'Noto Sans Georgian',sans-serif;background:var(--bg);color:var(--tx);font-size:14px;min-height:100vh}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:228px;background:var(--nd);color:#fff;display:flex;flex-direction:column;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto}
+.logo{padding:18px 16px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.logo h1{font-size:16px;font-weight:600}
+.logo-sub{font-size:11px;color:rgba(255,255,255,.38);margin-top:3px;display:flex;align-items:center;gap:5px}
+.dot{width:6px;height:6px;border-radius:50%;background:#22c55e;animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.nav{padding:10px 8px;flex:1}
+.nav-sec{font-size:10px;font-weight:600;color:rgba(255,255,255,.28);padding:12px 10px 4px;letter-spacing:.8px}
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;color:rgba(255,255,255,.58);font-size:13px;font-weight:500;transition:all .15s;margin-bottom:2px;border:none;background:none;width:100%;text-align:left}
+.nav-item:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav-item.active{background:var(--nl);color:#fff}
+.nav-item i{font-size:16px;flex-shrink:0}
+.nbadge{margin-left:auto;background:#ef4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:20px;font-weight:600}
+.main{flex:1;display:flex;flex-direction:column;min-width:0;overflow:auto}
+.topbar{background:var(--sf);border-bottom:1px solid var(--bd);padding:0 22px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;box-shadow:var(--sh)}
+.topbar-title{font-size:15px;font-weight:600}
+.topbar-actions{display:flex;gap:8px;align-items:center}
+.content{padding:22px;flex:1}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:var(--r);font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all .15s;font-family:inherit;white-space:nowrap}
+.btn-primary{background:var(--navy);color:#fff}.btn-primary:hover{background:var(--nl)}
+.btn-secondary{background:var(--sf);color:var(--tx);border:1px solid var(--bd)}.btn-secondary:hover{background:var(--bg)}
+.btn-danger{background:var(--d-bg);color:var(--d-tx);border:1px solid var(--d-bd)}.btn-danger:hover{background:#fecaca}
+.btn-success{background:var(--s-bg);color:var(--s-tx);border:1px solid var(--s-bd)}
+.btn-sm{padding:4px 9px;font-size:12px}
+.btn-icon{padding:6px;border-radius:8px;background:var(--sf);border:1px solid var(--bd);cursor:pointer;display:inline-flex;align-items:center;color:var(--mu);transition:all .15s}
+.btn-icon:hover{color:var(--navy);border-color:var(--navy)}
+.card{background:var(--sf);border-radius:var(--rl);border:1px solid var(--bd);box-shadow:var(--sh)}
+.card-header{padding:14px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.card-title{font-size:14px;font-weight:600}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin-bottom:20px}
+.sc{background:var(--sf);border-radius:var(--rl);border:1px solid var(--bd);padding:14px 16px;box-shadow:var(--sh)}
+.sc-label{font-size:10px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
+.sc-value{font-size:22px;font-weight:600;line-height:1}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:860px}
+thead th{background:var(--navy);color:#fff;padding:9px 11px;text-align:left;font-size:11px;font-weight:500;white-space:nowrap;position:sticky;top:0;z-index:5}
+thead th:first-child{border-radius:var(--rl) 0 0 0}
+thead th:last-child{border-radius:0 var(--rl) 0 0}
+tbody tr{border-bottom:1px solid var(--bd);transition:background .1s}
+tbody tr:hover{background:#f8faff}
+tbody td{padding:8px 11px;font-size:13px;vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+.badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
+.priority-high{background:#fee2e2;color:#b91c1c}
+.priority-mid{background:#fef9c3;color:#92400e}
+.priority-low{background:#dcfce7;color:#166634}
+.r-late{background:#fee2e2;color:#b91c1c;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.r-today{background:#fef9c3;color:#92400e;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.fg{display:flex;flex-direction:column;gap:4px}
+.fg label{font-size:12px;font-weight:500;color:var(--mu)}
+.fg.full{grid-column:1/-1}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+input,select,textarea{padding:8px 10px;border:1px solid var(--bd);border-radius:var(--r);font-size:13px;font-family:inherit;background:var(--sf);color:var(--tx);transition:border .15s;width:100%}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--nl);box-shadow:0 0 0 3px rgba(46,117,182,.1)}
+textarea{resize:vertical;min-height:68px}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%2394A3B8' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;padding-right:28px}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .2s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--sf);border-radius:var(--rl);width:100%;box-shadow:var(--shl);transform:translateY(12px);transition:transform .2s;max-height:92vh;display:flex;flex-direction:column}
+.modal-overlay.open .modal{transform:translateY(0)}
+.modal-header{padding:16px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.modal-title{font-size:15px;font-weight:600}
+.modal-body{padding:18px;overflow-y:auto;flex:1}
+.modal-footer{padding:12px 18px;border-top:1px solid var(--bd);display:flex;gap:8px;justify-content:flex-end;flex-shrink:0}
+.mgr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.mgr-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);padding:16px;box-shadow:var(--sh);display:flex;flex-direction:column;gap:10px}
+.avatar{border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;flex-shrink:0}
+.mgr-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ms{background:var(--bg);border-radius:8px;padding:8px;text-align:center}
+.ms-v{font-size:16px;font-weight:600;color:var(--navy)}
+.ms-l{font-size:10px;color:var(--mu);font-weight:500}
+.add-card{border:2px dashed var(--bd);border-radius:var(--rl);padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:all .15s;color:var(--mu);text-align:center}
+.add-card:hover{border-color:var(--nl);color:var(--navy);background:#f0f7ff}
+.add-card i{font-size:26px}
+.today-card{background:var(--sf);border-radius:var(--rl);border:1px solid var(--bd);padding:13px 15px;display:flex;align-items:center;gap:13px;margin-bottom:10px;box-shadow:var(--sh)}
+.pipe-cols{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:12px;align-items:start}
+.pipe-col{background:var(--bg);border-radius:var(--rl);padding:12px}
+.pipe-col-hdr{font-size:11px;font-weight:600;color:var(--mu);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.pipe-item{background:var(--sf);border-radius:var(--r);border:1px solid var(--bd);padding:9px 11px;margin-bottom:7px;font-size:12px;box-shadow:var(--sh)}
+.set-list{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;max-height:280px;overflow-y:auto}
+.set-item{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--bg);border-radius:var(--r);border:1px solid var(--bd)}
+.set-item span{flex:1;font-size:13px}
+.add-row{display:flex;gap:7px}
+.add-row input{flex:1}
+.filter-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.search-wrap{position:relative;flex:1;min-width:160px}
+.search-wrap i{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--lt);font-size:15px}
+.search-wrap input{padding-left:32px}
+.empty{text-align:center;padding:44px 20px;color:var(--mu)}
+.empty i{font-size:34px;margin-bottom:10px;display:block;color:var(--lt)}
+.toast{position:fixed;bottom:22px;right:22px;background:var(--nd);color:#fff;padding:10px 16px;border-radius:var(--r);font-size:13px;font-weight:500;z-index:999;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none;max-width:320px}
+.toast.show{opacity:1;transform:translateY(0)}
+.loading{position:fixed;inset:0;background:rgba(255,255,255,.95);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.spinner{width:34px;height:34px;border:3px solid var(--bd);border-top-color:var(--navy);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.confirm-btns{display:flex;gap:8px;margin-top:14px;justify-content:flex-end}
+.dbar{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.dbar-inner{flex:1;background:var(--bg);border-radius:20px;height:8px;overflow:hidden}
+.dbar-fill{height:100%;background:var(--nl);border-radius:20px;transition:width .4s}
+.btn-wa{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:var(--r);font-size:12px;font-weight:500;cursor:pointer;border:none;font-family:inherit;background:#25D366;color:#fff;text-decoration:none;transition:all .15s;white-space:nowrap}
+.btn-wa:hover{background:#1da851}
+.btn-wa-icon{background:#25D366;color:#fff;border:none;padding:6px;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;transition:all .15s}
+.btn-wa-icon:hover{background:#1da851}
+/* WA Modal */
+.wa-modal-body{padding:18px;display:flex;flex-direction:column;gap:14px}
+.wa-template{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);padding:12px 14px;cursor:pointer;transition:all .15s;font-size:13px;line-height:1.6}
+.wa-template:hover{border-color:#25D366;background:#f0fdf4}
+.wa-template-label{font-size:11px;font-weight:600;color:var(--mu);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+.wa-send-btn{background:#25D366;color:#fff;border:none;padding:10px 18px;border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:inherit;width:100%;justify-content:center;transition:all .15s}
+.wa-send-btn:hover{background:#1da851}
+</style>
+</head>
+<body>
+
+<div class="loading" id="loading">
+  <div class="spinner"></div>
+  <div style="font-size:13px;color:var(--mu)">Firebase-თან კავშირი...</div>
+</div>
+
+<div class="layout" id="app" style="display:none">
+<aside class="sidebar">
+  <div class="logo">
+    <h1>Zenith CRM</h1>
+    <div class="logo-sub"><span class="dot"></span> ლაივ რეჟიმი</div>
+  </div>
+  <nav class="nav">
+    <div class="nav-sec">მთავარი</div>
+    <button class="nav-item active" onclick="showPage('crm')"><i class="ti ti-users"></i> კლიენტები</button>
+    <button class="nav-item" onclick="showPage('today')"><i class="ti ti-phone"></i> დღეს <span class="nbadge" id="today-badge">0</span></button>
+    <button class="nav-item" onclick="showPage('pipeline')"><i class="ti ti-layout-kanban"></i> Pipeline</button>
+    <button class="nav-item" onclick="showPage('managers')"><i class="ti ti-user-circle"></i> მენეჯერები</button>
+    <button class="nav-item" onclick="showPage('report')"><i class="ti ti-chart-bar"></i> ანგარიში</button>
+    <div class="nav-sec">გაყიდვები</div>
+    <button class="nav-item" id="nav-sales" onclick="showPage('sales')" style="display:none"><i class="ti ti-home-dollar"></i> გაყიდვების მოდული <span class="nbadge" id="sales-due-badge" style="display:none">!</span></button>
+    <button class="nav-item" id="nav-invoices" onclick="showPage('invoices')" style="display:none"><i class="ti ti-file-invoice"></i> ინვოისები</button>
+    <button class="nav-item" id="nav-salesstaff" onclick="showPage('salesstaff')" style="display:none"><i class="ti ti-users-group"></i> თანამ. (გაყიდვ.)</button>
+    <button class="nav-item" id="nav-developers" onclick="showPage('developers')" style="display:none"><i class="ti ti-building"></i> დეველოპერები</button>
+    <div class="nav-sec">კონფიგურაცია</div>
+    <button class="nav-item" onclick="showPage('settings')"><i class="ti ti-settings"></i> პარამეტრები</button>
+  </nav>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="page-title">კლიენტები</div>
+    <div class="topbar-actions" id="topbar-actions">
+      <button class="btn btn-primary" onclick="openAddLead()"><i class="ti ti-plus"></i> ახალი ლიდი</button>
+    </div>
+  </div>
+  <div class="content">
+
+    <!-- CRM -->
+    <div id="page-crm">
+      <div class="stats-grid" id="crm-stats"></div>
+      <div class="card">
+        <div class="card-header">
+          <div class="filter-bar" style="flex:1">
+            <div class="search-wrap"><i class="ti ti-search"></i>
+              <input type="text" placeholder="სახელი, ნომერი…" id="search-input" oninput="renderTable()">
+            </div>
+            <select id="filter-status" onchange="renderTable()" style="width:158px"></select>
+            <select id="filter-manager" onchange="renderTable()" style="width:152px"></select>
+            <select id="filter-priority" onchange="renderTable()" style="width:124px">
+              <option value="">ყველა პრიორ.</option>
+              <option>მაღალი</option><option>საშუალო</option><option>დაბალი</option>
+            </select>
+          </div>
+        </div>
+        <div id="reminder-filter-banner" style="display:none;align-items:center;gap:8px;padding:8px 14px;background:#fef2f2;border-bottom:1px solid #fecaca;font-size:13px;color:#b91c1c"></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th>სახელი</th><th>ნომერი</th><th>მენეჯერი</th><th>სტატუსი</th>
+              <th>ობიექტი</th><th>ბიუჯეტი</th><th>შ.ზარი</th>
+              <th>Reminder</th><th>პრიორ.</th><th>სხვა უბანი</th><th></th>
+            </tr></thead>
+            <tbody id="leads-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TODAY -->
+    <div id="page-today" style="display:none"><div id="today-list"></div></div>
+
+    <!-- PIPELINE -->
+    <div id="page-pipeline" style="display:none">
+      <div class="stats-grid" id="pipeline-stats"></div>
+      <div class="pipe-cols" id="pipeline-cols"></div>
+    </div>
+
+    <!-- MANAGERS -->
+    <div id="page-managers" style="display:none"><div class="mgr-grid" id="mgr-grid"></div></div>
+
+    <!-- REPORT -->
+    <div id="page-report" style="display:none">
+      <div class="stats-grid" id="report-stats"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:4px">
+        <div class="card"><div class="card-header"><div class="card-title">📊 სტატუსები</div></div><div style="padding:18px" id="report-status-list"></div></div>
+        <div class="card"><div class="card-header"><div class="card-title">👤 მენეჯერები</div></div><div style="padding:18px" id="report-mgr-list"></div></div>
+      </div>
+      <div style="margin-top:18px" class="card">
+        <div class="card-header"><div class="card-title">🏙 სასურველი უბნების სტატისტიკა</div></div>
+        <div style="padding:18px" id="report-dist-list"></div>
+      </div>
+    </div>
+
+    <!-- SALES MODULE -->
+    <div id="page-sales" style="display:none">
+      <div class="stats-grid" id="sales-stats"></div>
+      <div class="card">
+        <div class="card-header">
+          <div style="display:flex;gap:8px;flex:1;flex-wrap:wrap;align-items:center">
+            <div class="search-wrap" style="flex:1;min-width:160px"><i class="ti ti-search" style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--lt);font-size:15px"></i>
+              <input type="text" placeholder="კლიენტი, ბინა…" id="ss-search" oninput="renderSalesTable()" style="padding-left:32px;width:100%">
+            </div>
+            <select id="ss-filter-dev" onchange="renderSalesTable()" style="width:160px">
+              <option value="">ყველა დეველოპ.</option>
+            </select>
+            <select id="ss-filter-status" onchange="renderSalesTable()" style="width:140px">
+              <option value="">ყველა სტატუსი</option>
+              <option value="active">აქტიური</option>
+              <option value="cancelled">გაუქმებული</option>
+              <option value="completed">დასრულებული</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th>#</th><th>კლიენტი</th><th>ბინა/სართ.</th><th>ფართი</th>
+              <th>ჯამ. ღირ.</th><th>გადახდ.</th><th>%</th>
+              <th>დეველოპ.</th><th>საკომ. (წით/მწვ)</th><th>სტ.</th><th></th>
+            </tr></thead>
+            <tbody id="sales-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- INVOICES -->
+    <div id="page-invoices" style="display:none">
+      <div class="card">
+        <div class="card-header"><div class="card-title">📁 ინვოისების არქივი</div></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th>#</th><th>კლიენტი</th><th>დეველოპ.</th><th>ეტაპი</th>
+              <th>თანხა ($)</th><th>კურსი (₾)</th><th>თარიღი</th><th></th>
+            </tr></thead>
+            <tbody id="invoices-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SALES STAFF -->
+    <div id="page-salesstaff" style="display:none">
+      <div class="mgr-grid" id="salesstaff-grid"></div>
+    </div>
+
+    <!-- DEVELOPERS -->
+    <div id="page-developers" style="display:none">
+      <div class="mgr-grid" id="dev-grid"></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="page-settings" style="display:none">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px">
+
+        <div class="card">
+          <div class="card-header"><div class="card-title"><i class="ti ti-tag" style="vertical-align:-2px;margin-right:5px"></i>სტატუსები</div></div>
+          <div style="padding:16px">
+            <div class="set-list" id="status-list"></div>
+            <div class="add-row">
+              <input id="new-status-name" placeholder="სტატუსის სახელი" onkeydown="if(event.key==='Enter')addStatus()">
+              <input id="new-status-color" type="color" value="#3b82f6" style="width:42px;padding:3px;cursor:pointer;border-radius:8px">
+              <button class="btn btn-primary btn-sm" onclick="addStatus()"><i class="ti ti-plus"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-title"><i class="ti ti-building" style="vertical-align:-2px;margin-right:5px"></i>ობიექტი / ინტერესი</div></div>
+          <div style="padding:16px">
+            <div class="set-list" id="object-list"></div>
+            <div class="add-row">
+              <input id="new-object" placeholder="ობიექტის ტიპი" onkeydown="if(event.key==='Enter')addObject()">
+              <button class="btn btn-primary btn-sm" onclick="addObject()"><i class="ti ti-plus"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-title"><i class="ti ti-map-pin" style="vertical-align:-2px;margin-right:5px"></i>უბნები</div></div>
+          <div style="padding:16px">
+            <p style="font-size:11px;color:var(--mu);margin-bottom:10px">ეს სია ჩანს "სხვა უბანი" გრაფაში და ანგარიშში</p>
+            <div class="set-list" id="district-list"></div>
+            <div class="add-row">
+              <input id="new-district" placeholder="უბნის სახელი" onkeydown="if(event.key==='Enter')addDistrict()">
+              <button class="btn btn-primary btn-sm" onclick="addDistrict()"><i class="ti ti-plus"></i></button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:18px" class="card">
+        <div class="card-header">
+          <div class="card-title"><i class="ti ti-message-circle" style="vertical-align:-2px;margin-right:5px;color:#25D366"></i>WhatsApp შაბლონები</div>
+          <span style="font-size:12px;color:var(--mu)">გამოიყენე <code style="background:var(--bg);padding:1px 5px;border-radius:4px">{{სახელი}}</code> კლიენტის სახელის ჩასმისთვის</span>
+        </div>
+        <div style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <div>
+            <div style="font-size:11px;font-weight:600;color:var(--mu);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px">არსებული შაბლონები</div>
+            <div class="set-list" id="settings-tmpl-list" style="max-height:360px"></div>
+          </div>
+          <div style="border-left:1px solid var(--bd);padding-left:20px">
+            <div style="font-size:11px;font-weight:600;color:var(--mu);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px">ახალი შაბლონი</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div class="fg"><label>შაბლონის სახელი</label><input id="st-new-label" placeholder="მაგ: პირველი კავშირი"></div>
+              <div class="fg"><label>ტექსტი</label><textarea id="st-new-text" rows="6" placeholder="გამარჯობა {{სახელი}}! ..."></textarea></div>
+              <button class="btn btn-primary" onclick="addWATmplFromSettings()"><i class="ti ti-plus"></i> შაბლონის დამატება</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- MODAL: Lead -->
+<div class="modal-overlay" id="lead-modal">
+  <div class="modal" style="max-width:620px">
+    <div class="modal-header">
+      <div class="modal-title" id="lead-modal-title">ახალი ლიდი</div>
+      <button class="btn-icon" onclick="closeLead()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="fg"><label>სახელი *</label><input id="f-name" placeholder="სახელი გვარი"></div>
+        <div class="fg"><label>ნომერი *</label><input id="f-phone" placeholder="+995 5xx xxx xxx"></div>
+        <div class="fg"><label>მენეჯერი</label><select id="f-manager"></select></div>
+        <div class="fg"><label>სტატუსი</label><select id="f-status"></select></div>
+        <div class="fg"><label>ობიექტი / ინტერესი</label><select id="f-object"></select></div>
+        <div class="fg"><label>ბიუჯეტი ($)</label><input id="f-budget" type="number" placeholder="0"></div>
+        <div class="fg"><label>შემდეგი ზარი / შეხვედრა</label><input id="f-next" type="date"></div>
+        <div class="fg"><label>Follow-up თარიღი</label><input id="f-followup" type="date"></div>
+        <div class="fg"><label>პრიორიტეტი</label>
+          <select id="f-priority"><option>მაღალი</option><option selected>საშუალო</option><option>დაბალი</option></select>
+        </div>
+        <div class="fg"><label>სასურველი უბანი</label><select id="f-district"></select></div>
+        <div class="fg full"><label>კომენტარი</label><textarea id="f-comment"></textarea></div>
+        <div class="fg full"><label>შედეგი</label><input id="f-result"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeLead()">გაუქმება</button>
+      <button class="btn btn-primary" onclick="saveLead()"><i class="ti ti-check"></i> შენახვა</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Manager -->
+<div class="modal-overlay" id="mgr-modal">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-header">
+      <div class="modal-title" id="mgr-modal-title">ახალი მენეჯერი</div>
+      <button class="btn-icon" onclick="closeMgr()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="fg"><label>სახელი გვარი *</label><input id="m-name" placeholder="სახელი გვარი" onkeydown="if(event.key==='Enter')saveMgr()"></div>
+      <p id="mgr-note" style="margin-top:10px;font-size:12px;color:var(--s-tx);display:none"></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeMgr()">დახურვა</button>
+      <button class="btn btn-primary" onclick="saveMgr()"><i class="ti ti-plus"></i> დამატება</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: WhatsApp -->
+<div class="modal-overlay" id="wa-modal">
+  <div class="modal" style="max-width:520px">
+    <div class="modal-header">
+      <div class="modal-title" style="display:flex;align-items:center;gap:8px">
+        <span style="background:#25D366;color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <i class="ti ti-brand-whatsapp" style="font-size:16px"></i>
+        </span>
+        WhatsApp შეტყობინება
+      </div>
+      <button class="btn-icon" onclick="closeWA()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body" style="display:flex;flex-direction:column;gap:14px">
+      <div id="wa-client-info" style="background:var(--bg);border-radius:var(--r);padding:10px 14px;font-size:13px;border:1px solid var(--bd)"></div>
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">
+          <span style="font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.6px">შაბლონი:</span>
+          <button class="btn btn-secondary btn-sm" onclick="openWATmpl()"><i class="ti ti-settings"></i> შაბლონების მართვა</button>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px" id="wa-tmpl-btns"></div>
+      </div>
+      <div class="fg">
+        <label>შეტყობინება</label>
+        <textarea id="wa-text" rows="6" placeholder="შეტყობინება..."></textarea>
+      </div>
+      <div style="background:var(--i-bg);border:1px solid var(--i-bd);border-radius:var(--r);padding:10px 14px;font-size:12px;color:var(--i-tx);display:flex;align-items:flex-start;gap:8px">
+        <i class="ti ti-info-circle" style="font-size:16px;flex-shrink:0;margin-top:1px"></i>
+        <div><strong>JPG/PNG/PDF გაგზავნა:</strong> "გაგზავნა"-ს დაჭერის შემდეგ WhatsApp გაიხსნება — ტექსტი ავტომატურად ჩასმულია, სქამა ხატზე დაჭირებით ფაილი მიამაგრე.</div>
+      </div>
+      <button class="wa-send-btn" onclick="sendWA()">
+        <i class="ti ti-brand-whatsapp" style="font-size:18px"></i> გაგზავნა WhatsApp-ით
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: WA Template Manager -->
+<div class="modal-overlay" id="wa-tmpl-modal">
+  <div class="modal" style="max-width:500px">
+    <div class="modal-header">
+      <div class="modal-title">📝 შაბლონების მართვა</div>
+      <button class="btn-icon" onclick="closeWATmpl()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body" style="display:flex;flex-direction:column;gap:12px">
+      <div class="set-list" id="wa-tmpl-list" style="max-height:320px"></div>
+      <div style="border-top:1px solid var(--bd);padding-top:12px;display:flex;flex-direction:column;gap:8px">
+        <div class="fg"><label>შაბლონის სახელი</label><input id="wa-new-label" placeholder="მაგ: პირველი კავშირი"></div>
+        <div class="fg">
+          <label>ტექსტი — <code style="background:var(--bg);padding:1px 5px;border-radius:4px;font-size:11px">{{სახელი}}</code> ჩაანაცვლებს კლიენტის სახელს</label>
+          <textarea id="wa-new-text" rows="4" placeholder="გამარჯობა {{სახელი}}! ..."></textarea>
+        </div>
+        <button class="btn btn-primary" onclick="addWATmpl()"><i class="ti ti-plus"></i> შაბლონის დამატება</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Confirm -->
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal" style="max-width:340px">
+    <div class="modal-body" style="text-align:center;padding:28px 20px">
+      <i class="ti ti-alert-triangle" style="font-size:30px;color:#ef4444;display:block;margin-bottom:10px"></i>
+      <p style="font-weight:600;margin-bottom:5px" id="confirm-msg"></p>
+      <p style="font-size:12px;color:var(--mu)" id="confirm-sub"></p>
+      <div class="confirm-btns">
+        <button class="btn btn-secondary" onclick="closeConfirm()">გაუქმება</button>
+        <button class="btn btn-danger" id="confirm-ok">წაშლა</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Sale Form -->
+<div class="modal-overlay" id="sale-modal">
+  <div class="modal" style="max-width:780px">
+    <div class="modal-header">
+      <div class="modal-title" id="sale-modal-title">ახალი გაყიდვა</div>
+      <button class="btn-icon" onclick="document.getElementById('sale-modal').classList.remove('open')"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body">
+      <!-- Client & Property -->
+      <div style="font-size:11px;font-weight:600;color:var(--mu);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px">① კლიენტი და ქონება</div>
+      <div class="form-grid">
+        <div class="fg"><label>სახელი *</label><input id="sc-fname" placeholder="სახელი"></div>
+        <div class="fg"><label>გვარი *</label><input id="sc-lname" placeholder="გვარი"></div>
+        <div class="fg"><label>ბინის ნომერი *</label><input id="sc-apt" placeholder="A-301"></div>
+        <div class="fg"><label>სართული</label><input id="sc-floor" type="number" placeholder="3"></div>
+        <div class="fg"><label>ფართი (მ²)</label><input id="sc-area" type="number" placeholder="65" oninput="saleCalcTotal()"></div>
+        <div class="fg"><label>მ² ფასი ($)</label><input id="sc-sqmprice" type="number" placeholder="1200" oninput="saleCalcTotal()"></div>
+        <div class="fg"><label>ჯამური ღირებულება ($)</label><input id="sc-total" type="number" placeholder="78600" oninput="saleCalcSqm()"></div>
+        <div class="fg"><label>დეველოპერი</label><select id="sc-devid"></select></div>
+        <div class="fg"><label>მენეჯერი</label><select id="sc-mgrid"></select></div>
+        <div class="fg full"><label>შენიშვნა</label><textarea id="sc-note" rows="2"></textarea></div>
+      </div>
+      <!-- Dealer -->
+      <div style="margin-top:14px;padding:12px;background:var(--bg);border-radius:var(--r);border:1px solid var(--bd)">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;font-weight:500">
+          <input type="checkbox" id="sc-hasdealer" onchange="document.getElementById('sc-dealer-fields').style.display=this.checked?'':'none'" style="width:16px;height:16px;accent-color:var(--navy)">
+          გაყიდულია დილერის მიერ
+        </label>
+        <div id="sc-dealer-fields" style="display:none;margin-top:12px">
+          <div class="form-grid">
+            <div class="fg"><label>დილერის სახელი</label><input id="sc-dealername" placeholder="სახელი / კომპანია"></div>
+            <div class="fg"><label>დილერის ჯამ. საკომ. ($)</label><input id="sc-dealertotal" type="number" placeholder="0"></div>
+          </div>
+          <div style="font-size:12px;font-weight:600;color:var(--mu);margin:10px 0 6px">დილერის ეტაპები:</div>
+          <div id="sc-dealer-stages"></div>
+          <button class="btn btn-secondary btn-sm" onclick="addDealerStage()" style="margin-top:6px"><i class="ti ti-plus"></i> ეტაპი</button>
+        </div>
+      </div>
+      <!-- Commission -->
+      <div style="font-size:11px;font-weight:600;color:var(--mu);margin:16px 0 10px;text-transform:uppercase;letter-spacing:.5px">② საკომისიო</div>
+      <div class="form-grid" style="margin-bottom:10px">
+        <div class="fg"><label>ჯამური საკომისიო ($)</label><input id="sc-totalcomm" type="number" placeholder="0" oninput="updateCommAmounts()"></div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px">
+        <thead><tr style="background:var(--bg)">
+          <th style="padding:7px 8px;text-align:left;font-weight:600;color:var(--mu)">კლიენტის % ზღვარი</th>
+          <th style="padding:7px 8px;text-align:left;font-weight:600;color:var(--mu)">საკომ. % (ჯამ. საკომ.-დან)</th>
+          <th style="padding:7px 8px;text-align:left;font-weight:600;color:var(--mu)">მისაღები თანხა ($)</th>
+          <th style="padding:7px 8px"></th>
+        </tr></thead>
+        <tbody id="sc-comm-body"></tbody>
+      </table>
+      <button class="btn btn-secondary btn-sm" onclick="addCommStage()" style="margin-top:8px"><i class="ti ti-plus"></i> ეტაპის დამატება</button>
+      <!-- Payment Schedule -->
+      <div style="font-size:11px;font-weight:600;color:var(--mu);margin:16px 0 10px;text-transform:uppercase;letter-spacing:.5px">③ გადახდების გრაფიკი (Excel)</div>
+      <div style="background:var(--bg);border-radius:var(--r);border:1px solid var(--bd);padding:14px">
+        <input type="file" id="sc-excel" accept=".xlsx,.xls" onchange="previewSaleExcel()">
+        <div id="sc-excel-mapping" style="display:none;margin-top:12px">
+          <div style="font-size:12px;color:var(--mu);margin-bottom:8px">მიუთითე სვეტები:</div>
+          <div class="form-grid">
+            <div class="fg"><label>📅 თარიღის სვეტი</label><select id="sc-map-date"></select></div>
+            <div class="fg"><label>💵 თანხის სვეტი</label><select id="sc-map-amount"></select></div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="confirmSaleMapping()" style="margin-top:8px"><i class="ti ti-check"></i> გრაფიკის ჩატვირთვა</button>
+        </div>
+        <div id="sc-excel-status" style="font-size:12px;color:var(--mu);margin-top:6px"></div>
+      </div>
+      <!-- PDF -->
+      <div style="font-size:11px;font-weight:600;color:var(--mu);margin:16px 0 10px;text-transform:uppercase;letter-spacing:.5px">④ ხელშეკრულება PDF (არქივი)</div>
+      <input type="file" id="sc-pdf" accept=".pdf">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="document.getElementById('sale-modal').classList.remove('open')">გაუქმება</button>
+      <button class="btn btn-primary" onclick="saveSale()"><i class="ti ti-check"></i> შენახვა</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Sale Detail -->
+<div class="modal-overlay" id="saledetail-modal">
+  <div class="modal" style="max-width:800px">
+    <div class="modal-header">
+      <div class="modal-title" id="saledetail-title">კლიენტის დეტალები</div>
+      <button class="btn-icon" onclick="document.getElementById('saledetail-modal').classList.remove('open')"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body" id="saledetail-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="document.getElementById('saledetail-modal').classList.remove('open')">დახურვა</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Invoice -->
+<div class="modal-overlay" id="invoice-modal">
+  <div class="modal" style="max-width:680px">
+    <div class="modal-header">
+      <div class="modal-title">📄 ინვოისი</div>
+      <button class="btn-icon" onclick="document.getElementById('invoice-modal').classList.remove('open')"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="fg" style="margin-bottom:14px;max-width:240px">
+        <label>ეროვნული ბანკის კურსი (1$ = ? ₾)</label>
+        <input id="inv-rate" type="number" step="0.01" placeholder="2.72" oninput="buildInvoice()">
+      </div>
+      <div id="inv-preview"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="document.getElementById('invoice-modal').classList.remove('open')">გაუქმება</button>
+      <button class="btn btn-success" onclick="printInvoice()"><i class="ti ti-printer"></i> ბეჭდვა / PDF</button>
+      <button class="btn btn-primary" onclick="archiveInvoice()"><i class="ti ti-archive"></i> შენახვა</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Early Payment -->
+<div class="modal-overlay" id="early-modal">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-header">
+      <div class="modal-title">💸 წინსწრებითი გადახდა</div>
+      <button class="btn-icon" onclick="document.getElementById('early-modal').classList.remove('open')"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body" style="display:flex;flex-direction:column;gap:12px">
+      <p style="font-size:13px;color:var(--mu)" id="early-info"></p>
+      <div class="fg"><label>წინსწრებით გადახდილი თანხა ($)</label><input id="early-amount" type="number" placeholder="0"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="document.getElementById('early-modal').classList.remove('open')">გაუქმება</button>
+      <button class="btn btn-primary" onclick="saveEarly()"><i class="ti ti-check"></i> შეყვანა</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Sales Staff -->
+<div class="modal-overlay" id="salesstaff-modal">
+  <div class="modal" style="max-width:440px">
+    <div class="modal-header">
+      <div class="modal-title" id="salesstaff-modal-title">ახალი თანამშრომელი</div>
+      <button class="btn-icon" onclick="document.getElementById('salesstaff-modal').classList.remove('open')"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body" style="display:flex;flex-direction:column;gap:12px">
+      <div class="fg"><label>სახელი გვარი *</label><input id="ss-fullname" placeholder="სახელი გვარი"></div>
+      <div class="fg"><label>Username *</label><input id="ss-username" placeholder="username"></div>
+      <div class="fg"><label>როლი *</label>
+        <select id="ss-role">
+          <option value="manager">გაყიდვების მენეჯერი</option>
+          <option value="head">ფილიალის ხელმძღვანელი</option>
+          <option value="director">დირექტორი</option>
+          <option value="ceo">CEO</option>
+          <option value="developer">დეველოპერი</option>
+        </select>
+      </div>
+      <div class="fg" id="ss-head-wrap">
+        <label>ხელმძღვანელი (მხოლოდ მენეჯერისთვის)</label>
+        <select id="ss-headid"></select>
+      </div>
+      <div class="fg" id="ss-pass-wrap"><label>პაროლი *</label><input id="ss-password" type="password" placeholder="პაროლი"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="document.getElementById('salesstaff-modal').classList.remove('open')">გაუქმება</button>
+      <button class="btn btn-primary" onclick="saveSalesStaff()"><i class="ti ti-check"></i> შენახვა</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Developer -->
+<div class="modal-overlay" id="dev-modal">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header">
+      <div class="modal-title" id="dev-modal-title">ახალი დეველოპერი</div>
+      <button class="btn-icon" onclick="document.getElementById('dev-modal').classList.remove('open')"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body" style="display:flex;flex-direction:column;gap:12px">
+      <div class="fg"><label>დასახელება *</label><input id="dev-name" placeholder="სქაილუქს, ინსი…"></div>
+      <div class="fg"><label>საიდენტ. კოდი</label><input id="dev-tax" placeholder="123456789"></div>
+      <div class="fg"><label>ელ-ფოსტა</label><input id="dev-email" type="email" placeholder="info@dev.ge"></div>
+      <div class="fg"><label>დაკავშირებული მომხმარებელი (developer სტატუსი)</label>
+        <select id="dev-staffid"><option value="">— არ არის —</option></select>
+        <span style="font-size:11px;color:var(--mu)">ეს მომხმარებელი ნახავს მხოლოდ ამ დეველოპერის გაყიდვებს</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="document.getElementById('dev-modal').classList.remove('open')">გაუქმება</button>
+      <button class="btn btn-primary" onclick="saveDev()"><i class="ti ti-check"></i> შენახვა</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Config (rekvizitebi) -->
+<div class="modal-overlay" id="config-modal">
+  <div class="modal" style="max-width:440px">
+    <div class="modal-header">
+      <div class="modal-title">🏢 ზენით ჰოლდინგი — რეკვიზიტები</div>
+      <button class="btn-icon" onclick="document.getElementById('config-modal').classList.remove('open')"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body" style="display:flex;flex-direction:column;gap:12px">
+      <div class="fg"><label>კომპანიის დასახელება</label><input id="cfg-company" placeholder="ზენიტ ჰოლდინგი"></div>
+      <div class="fg"><label>საიდენტ. კოდი</label><input id="cfg-tax" placeholder="123456789"></div>
+      <div class="fg"><label>ბანკის სახელი</label><input id="cfg-bank" placeholder="ბანკი"></div>
+      <div class="fg"><label>ბანკის კოდი (BIC/SWIFT)</label><input id="cfg-bankcode" placeholder="BAGAGE22"></div>
+      <div class="fg"><label>ანგარიშის ნომერი (IBAN)</label><input id="cfg-account" placeholder="GE00BB0000000000000000"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="document.getElementById('config-modal').classList.remove('open')">გაუქმება</button>
+      <button class="btn btn-primary" onclick="saveCfg()"><i class="ti ti-check"></i> შენახვა</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, doc, addDoc, setDoc, deleteDoc,
+         onSnapshot, query, orderBy, getDocs, writeBatch }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const fbApp = initializeApp({
+  apiKey:"AIzaSyBZ7iAV1MZJ9AUB4kptjtGFtfTSte_WBUY",
+  authDomain:"crm-zenith-group.firebaseapp.com",
+  projectId:"crm-zenith-group",
+  storageBucket:"crm-zenith-group.firebasestorage.app",
+  messagingSenderId:"290335868847",
+  appId:"1:290335868847:web:bd801b02e668f56bae915a"
+});
+const db = getFirestore(fbApp);
+
+let leads=[], managers=[], statuses=[], objects=[], districts=[];
+let editingLeadId=null, editingMgrId=null, currentPage='crm';
+let activeReminderFilter=null;
+
+const DEFAULT_STATUSES=[
+  {name:'ახალი ლიდი',color:'#22c55e'},{name:'ვესაუბრე მობილურზე',color:'#3b82f6'},
+  {name:'უნდა დავუკავშირდე',color:'#f59e0b'},{name:'დავიბარე შეხვედრაზე',color:'#f97316'},
+  {name:'იყო მოსული',color:'#a855f7'},{name:'ფიქრობს',color:'#06b6d4'},
+  {name:'არ პასუხობს',color:'#94a3b8'},{name:'უარი თქვა',color:'#ef4444'},
+  {name:'გაიყიდა',color:'#16a34a'},
+];
+const DEFAULT_OBJECTS=['სტუდიო','1-ოთახიანი','2-ოთახიანი','3-ოთახიანი','4+ ოთახიანი','კომერციული'];
+const DEFAULT_DISTRICTS=['ვაკე','საბურთალო','დიდუბე','გლდანი','ისანი','სამგორი','ნაძალადევი','ავლაბარი','მთაწმინდა','კრწანისი'];
+const DEFAULT_MANAGERS=['გიორგი ბაბუაშვილი','მერიკო აბრამიშვილი','რობერტ კარდაშევი','მიშო ჩიბარაშვილი'];
+
+const PIPE_STAGES=['ახალი ლიდი','მოლაპარაკება','პრეზენტაცია','წინადადება','მოლოდინი','მოგებული','წაგებული'];
+const PIPE_MAP={'ახალი ლიდი':'ახალი ლიდი','ვესაუბრე მობილურზე':'მოლაპარაკება',
+  'უნდა დავუკავშირდე':'მოლაპარაკება','დავიბარე შეხვედრაზე':'პრეზენტაცია',
+  'იყო მოსული':'წინადადება','ფიქრობს':'მოლოდინი',
+  'გაიყიდა':'მოგებული','უარი თქვა':'წაგებული','არ პასუხობს':'მოლაპარაკება'};
+const ADVICE={'ახალი ლიდი':'📋 გამოარკვიე ინტერესი და ბიუჯეტი',
+  'ვესაუბრე მობილურზე':'📞 Follow-up 2-3 დღეში',
+  'უნდა დავუკავშირდე':'⏰ დაგეგმე ზარი',
+  'დავიბარე შეხვედრაზე':'🗓 შეხვედრისთვის მომზადება',
+  'იყო მოსული':'🤝 გაგზავნე წინადადება',
+  'ფიქრობს':'💬 გაუგზავნე სასარგებლო ინფო',
+  'არ პასუხობს':'📵 სცადე სხვა დროს',
+  'უარი თქვა':'🔄 გაარკვიე მიზეზი',
+  'გაიყიდა':'✅ სთხოვე Referral'};
+
+const todayStr=()=>new Date().toISOString().slice(0,10);
+const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const fmtUSD=v=>v?'$'+Number(v).toLocaleString():'—';
+const statusColor=name=>{const s=statuses.find(x=>x.name===name);return s?s.color:'#94a3b8';};
+const getReminder=l=>{
+  if(!l.followup||l.status==='გაიყიდა') return '';
+  const t=todayStr();
+  return l.followup<t?'late':l.followup===t?'today':'';
+};
+
+function startListeners(){
+  onSnapshot(query(collection(db,'leads'),orderBy('createdAt','desc')),snap=>{
+    leads=snap.docs.map(d=>({id:d.id,...d.data()}));
+    refresh();
+  });
+  onSnapshot(collection(db,'managers'),snap=>{
+    managers=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.name.localeCompare(b.name,'ka'));
+    refresh();updateMgrDropdowns();
+  });
+  onSnapshot(collection(db,'statuses'),snap=>{
+    statuses=snap.docs.map(d=>({id:d.id,...d.data()}));
+    refresh();renderStatusSettings();
+  });
+  onSnapshot(collection(db,'objects'),snap=>{
+    objects=snap.docs.map(d=>({id:d.id,...d.data()}));
+    refresh();renderObjectSettings();
+  });
+  onSnapshot(collection(db,'districts'),snap=>{
+    districts=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.name.localeCompare(b.name,'ka'));
+    refresh();renderDistrictSettings();
+  });
+}
+
+function refresh(){
+  updateTodayBadge();
+  if(currentPage==='crm'){renderStats();renderTable();populateFilters();}
+  else if(currentPage==='today') renderToday();
+  else if(currentPage==='pipeline') renderPipeline();
+  else if(currentPage==='managers') renderManagers();
+  else if(currentPage==='report') renderReport();
+}
+
+function updateTodayBadge(){
+  document.getElementById('today-badge').textContent=leads.filter(l=>getReminder(l)==='today').length;
+}
+
+window.showPage=function(p){
+  currentPage=p;
+  activeReminderFilter=null;
+  ['crm','today','pipeline','managers','report','settings'].forEach(pg=>{
+    document.getElementById('page-'+pg).style.display=pg===p?'':'none';
+  });
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-item')[['crm','today','pipeline','managers','report','settings'].indexOf(p)].classList.add('active');
+  const titles={crm:'კლიენტები',today:'დღეს დასაკავშირებლები',pipeline:'Pipeline',
+    managers:'მენეჯერები',report:'ანგარიში',settings:'პარამეტრები'};
+  document.getElementById('page-title').textContent=titles[p];
+  const acts=document.getElementById('topbar-actions');
+  if(p==='crm') acts.innerHTML='<button class="btn btn-primary" onclick="openAddLead()"><i class="ti ti-plus"></i> ახალი ლიდი</button>';
+  else if(p==='managers') acts.innerHTML='<button class="btn btn-primary" onclick="openMgr()"><i class="ti ti-plus"></i> ახალი მენეჯერი</button>';
+  else acts.innerHTML='';
+  refresh();
+  if(p==='settings'){renderStatusSettings();renderObjectSettings();renderDistrictSettings();renderSettingsTmpl();}
+};
+
+function scHtml(label,val,color,reminderFilter){
+  const clickStyle=reminderFilter?`cursor:pointer;`:'';
+  const icon=reminderFilter?`<span style="position:absolute;top:7px;right:9px;font-size:10px;color:var(--lt)"><i class="ti ti-filter" style="font-size:11px"></i></span>`:'';
+  const onclick=reminderFilter?`onclick="filterByReminder('${reminderFilter}')" title="დააჭირე გასაფილტრად"`:'';
+  return `<div class="sc" ${onclick} style="${clickStyle}position:relative">${icon}<div class="sc-label">${label}</div><div class="sc-value" style="${color?'color:'+color:''}">${val}</div></div>`;
+}
+
+function renderStats(){
+  const total=leads.length,sold=leads.filter(l=>l.status==='გაიყიდა').length;
+  const rev=leads.filter(l=>l.status==='გაიყიდა').reduce((s,l)=>s+(+l.budget||0),0);
+  const tc=leads.filter(l=>getReminder(l)==='today').length;
+  const late=leads.filter(l=>getReminder(l)==='late').length;
+  document.getElementById('crm-stats').innerHTML=
+    scHtml('სულ ლიდები',total,'')+scHtml('გაყიდული',sold,'#16a34a')+
+    scHtml('Conversion',total?Math.round(sold/total*100)+'%':'0%','')+
+    scHtml('შემოსავალი',fmtUSD(rev),'#1F4E78')+
+    scHtml('📞 დღეს',tc,tc?'#f59e0b':'','today')+
+    scHtml('⚠️ გადაცილება',late,late?'#ef4444':'','late');
+}
+
+function populateFilters(){
+  const ss=document.getElementById('filter-status'),sv=ss.value;
+  ss.innerHTML='<option value="">ყველა სტატუსი</option>'+statuses.map(s=>`<option>${s.name}</option>`).join('');
+  ss.value=sv;
+  const ms=document.getElementById('filter-manager'),mv=ms.value;
+  ms.innerHTML='<option value="">ყველა მენეჯ.</option>'+managers.map(m=>`<option>${m.name}</option>`).join('');
+  ms.value=mv;
+}
+function updateMgrDropdowns(){
+  const opts=managers.map(m=>`<option>${m.name}</option>`).join('');
+  const fm=document.getElementById('f-manager');
+  if(fm){const v=fm.value;fm.innerHTML=opts;fm.value=v;}
+  populateFilters();
+}
+
+window.renderTable=function(){
+  const q=(document.getElementById('search-input').value||'').toLowerCase();
+  const fs=document.getElementById('filter-status').value;
+  const fm=document.getElementById('filter-manager').value;
+  const fp=document.getElementById('filter-priority').value;
+  const filtered=leads.filter(l=>{
+    if(fs&&l.status!==fs) return false;
+    if(fm&&l.manager!==fm) return false;
+    if(fp&&l.priority!==fp) return false;
+    if(q&&!(l.name||'').toLowerCase().includes(q)&&!(l.phone||'').includes(q)&&!(l.object||'').toLowerCase().includes(q)) return false;
+    if(activeReminderFilter&&getReminder(l)!==activeReminderFilter) return false;
+    return true;
+  });
+  const tb=document.getElementById('leads-tbody');
+  const banner=document.getElementById('reminder-filter-banner');
+  if(banner){
+    if(activeReminderFilter){
+      banner.style.display='flex';
+      banner.innerHTML=`<i class="ti ti-filter" style="font-size:14px"></i>
+        <span style="flex:1">${activeReminderFilter==='late'?'⚠️ გადაცილებული კლიენტები':'📞 დღეს დასაკავშირებლები'} — <strong>${filtered.length}</strong> კლიენტი</span>
+        <button onclick="filterByReminder('${activeReminderFilter}')" style="background:transparent;border:none;cursor:pointer;color:var(--d-tx);font-size:12px;font-weight:600;padding:2px 6px">✕ გაუქმება</button>`;
+    } else {
+      banner.style.display='none';
+    }
+  }
+  if(!filtered.length){
+    tb.innerHTML=`<tr><td colspan="11" style="text-align:center;padding:32px;color:var(--mu)"><i class="ti ti-mood-empty" style="font-size:22px;display:block;margin-bottom:8px"></i>ლიდი ვერ მოიძებნა</td></tr>`;
+    return;
+  }
+  tb.innerHTML=filtered.map(l=>{
+    const rem=getReminder(l);
+    const remHtml=rem==='late'?'<span class="r-late">⚠️ გადავ.</span>':rem==='today'?'<span class="r-today">📞 დღეს</span>':'—';
+    const prCls=l.priority==='მაღალი'?'priority-high':l.priority==='საშუალო'?'priority-mid':'priority-low';
+    const sc=statusColor(l.status);
+    return `<tr>
+      <td><strong>${esc(l.name)}</strong></td>
+      <td style="font-family:monospace;font-size:12px">${esc(l.phone)}</td>
+      <td>${esc(l.manager||'—')}</td>
+      <td><span class="badge" style="background:${sc}22;color:${sc};border:1px solid ${sc}44">${esc(l.status)}</span></td>
+      <td>${esc(l.object||'—')}</td>
+      <td style="font-weight:600;color:var(--navy)">${fmtUSD(l.budget)}</td>
+      <td style="font-size:12px;color:var(--mu)">${l.next||'—'}</td>
+      <td>${remHtml}</td>
+      <td><span class="badge ${prCls}">${esc(l.priority||'—')}</span></td>
+      <td style="font-size:12px;color:var(--mu)">${l.district&&l.district!=='—'?'📍'+esc(l.district):'—'}</td>
+      <td><div style="display:flex;gap:4px">
+        <button class="btn-icon" title="${ADVICE[l.status]||'რჩევა'}" onclick="showAdvice('${l.id}')"><i class="ti ti-bulb"></i></button>
+        <button class="btn-wa-icon" title="WhatsApp" onclick="openWA('${l.id}')"><i class="ti ti-brand-whatsapp" style="font-size:15px"></i></button>
+        <button class="btn-icon" onclick="editLead('${l.id}')"><i class="ti ti-edit"></i></button>
+        <button class="btn-icon" onclick="deleteLead('${l.id}')" style="color:#ef4444"><i class="ti ti-trash"></i></button>
+      </div></td>
+    </tr>`;
+  }).join('');
+};
+
+window.showAdvice=function(id){
+  const l=leads.find(x=>x.id===id);
+  if(l) showToast(ADVICE[l.status]||'სტატუსი განახლე');
+};
+
+window.filterByReminder=function(type){
+  if(activeReminderFilter===type){
+    activeReminderFilter=null;
+  } else {
+    activeReminderFilter=type;
+    showToast(type==='late'?'⚠️ გადაცილებული კლიენტები':'📞 დღეს დასაკავშირებლები');
+  }
+  renderStats();
+  renderTable();
+};
+
+function populateLeadForm(){
+  document.getElementById('f-manager').innerHTML=managers.map(m=>`<option>${m.name}</option>`).join('');
+  document.getElementById('f-status').innerHTML=statuses.map(s=>`<option>${s.name}</option>`).join('');
+  document.getElementById('f-object').innerHTML=objects.map(o=>`<option>${o.name}</option>`).join('');
+  document.getElementById('f-district').innerHTML='<option value="—">— არა —</option>'+districts.map(d=>`<option>${d.name}</option>`).join('');
+}
+window.openAddLead=function(){
+  editingLeadId=null;
+  document.getElementById('lead-modal-title').textContent='ახალი ლიდი';
+  ['f-name','f-phone','f-budget','f-next','f-followup','f-comment','f-result'].forEach(id=>document.getElementById(id).value='');
+  populateLeadForm();
+  document.getElementById('lead-modal').classList.add('open');
+};
+window.editLead=function(id){
+  const l=leads.find(x=>x.id===id);if(!l) return;
+  editingLeadId=id;
+  document.getElementById('lead-modal-title').textContent='ლიდის რედაქტირება';
+  populateLeadForm();
+  document.getElementById('f-name').value=l.name||'';
+  document.getElementById('f-phone').value=l.phone||'';
+  document.getElementById('f-manager').value=l.manager||'';
+  document.getElementById('f-status').value=l.status||'';
+  document.getElementById('f-object').value=l.object||'';
+  document.getElementById('f-budget').value=l.budget||'';
+  document.getElementById('f-next').value=l.next||'';
+  document.getElementById('f-followup').value=l.followup||'';
+  document.getElementById('f-priority').value=l.priority||'საშუალო';
+  document.getElementById('f-district').value=l.district||'—';
+  document.getElementById('f-comment').value=l.comment||'';
+  document.getElementById('f-result').value=l.result||'';
+  document.getElementById('lead-modal').classList.add('open');
+};
+window.closeLead=function(){document.getElementById('lead-modal').classList.remove('open')};
+window.saveLead=async function(){
+  const name=document.getElementById('f-name').value.trim();
+  const phone=document.getElementById('f-phone').value.trim();
+  if(!name||!phone){showToast('სახელი და ნომერი სავალდებულოა!');return;}
+  const data={name,phone,
+    manager:document.getElementById('f-manager').value,
+    status:document.getElementById('f-status').value,
+    object:document.getElementById('f-object').value,
+    budget:document.getElementById('f-budget').value,
+    next:document.getElementById('f-next').value,
+    followup:document.getElementById('f-followup').value,
+    priority:document.getElementById('f-priority').value,
+    district:document.getElementById('f-district').value,
+    comment:document.getElementById('f-comment').value,
+    result:document.getElementById('f-result').value,
+  };
+  try{
+    if(editingLeadId){
+      await setDoc(doc(db,'leads',editingLeadId),data,{merge:true});
+      showToast('✅ ლიდი განახლდა');
+    } else {
+      data.createdAt=Date.now();
+      await addDoc(collection(db,'leads'),data);
+      showToast('✅ ახალი ლიდი დაემატა');
+    }
+    closeLead();
+  } catch(e){showToast('❌ '+e.message);}
+};
+window.deleteLead=function(id){
+  const l=leads.find(x=>x.id===id);
+  document.getElementById('confirm-msg').textContent='ლიდის წაშლა?';
+  document.getElementById('confirm-sub').textContent=l?l.name:'';
+  document.getElementById('confirm-ok').onclick=async()=>{
+    await deleteDoc(doc(db,'leads',id));showToast('🗑 წაიშალა');closeConfirm();
+  };
+  document.getElementById('confirm-modal').classList.add('open');
+};
+
+function renderToday(){
+  const tl=leads.filter(l=>getReminder(l)==='today');
+  const ll=leads.filter(l=>getReminder(l)==='late');
+  let h='';
+  if(!tl.length&&!ll.length){h='<div class="empty"><i class="ti ti-circle-check"></i><p>დღეს დასაკავშირებელი არ არის!</p></div>';}
+  if(tl.length) h+=`<div style="font-size:13px;font-weight:600;color:var(--w-tx);margin-bottom:10px">📞 დღეს — ${tl.length}</div>`+tl.map(l=>todayCard(l,'today')).join('');
+  if(ll.length) h+=`<div style="font-size:13px;font-weight:600;color:#ef4444;margin:16px 0 10px">⚠️ გადაცილება — ${ll.length}</div>`+ll.map(l=>todayCard(l,'late')).join('');
+  document.getElementById('today-list').innerHTML=h;
+}
+function todayCard(l,type){
+  const ini=(l.name||'?').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  return `<div class="today-card" style="border-left:3px solid ${type==='late'?'#ef4444':'#f59e0b'}">
+    <div class="avatar" style="width:38px;height:38px;font-size:13px">${ini}</div>
+    <div style="flex:1">
+      <div style="font-weight:600;margin-bottom:2px">${esc(l.name)}</div>
+      <div style="font-size:12px;color:var(--mu)">${esc(l.manager||'')} · ${esc(l.status)}</div>
+      <div style="font-size:12px;color:var(--mu)">${l.object?esc(l.object):''}${l.budget?' · '+fmtUSD(l.budget):''}${l.district&&l.district!=='—'?' · 📍'+esc(l.district):''}</div>
+    </div>
+    <div style="display:flex;gap:6px">
+      <a href="tel:${l.phone}" style="text-decoration:none"><button class="btn btn-success btn-sm"><i class="ti ti-phone"></i> ${esc(l.phone)}</button></a>
+      <button class="btn-wa btn-sm" onclick="openWA('${l.id}')"><i class="ti ti-brand-whatsapp"></i> WA</button>
+      <button class="btn btn-secondary btn-sm" onclick="editLead('${l.id}')"><i class="ti ti-edit"></i></button>
+    </div>
+  </div>`;
+}
+
+function renderPipeline(){
+  const won=leads.filter(l=>l.status==='გაიყიდა');
+  const rev=won.reduce((s,l)=>s+(+l.budget||0),0);
+  const tot=leads.reduce((s,l)=>s+(+l.budget||0),0);
+  document.getElementById('pipeline-stats').innerHTML=
+    scHtml('სულ ლიდები',leads.length,'')+scHtml('მოგებული',won.length,'#16a34a')+
+    scHtml('შემოსავალი',fmtUSD(rev),'#1F4E78')+scHtml('Pipeline',fmtUSD(tot),'');
+  const groups={};PIPE_STAGES.forEach(s=>groups[s]=[]);
+  leads.forEach(l=>{const m=PIPE_MAP[l.status]||'ახალი ლიდი';if(groups[m])groups[m].push(l);});
+  document.getElementById('pipeline-cols').innerHTML=PIPE_STAGES.map(stage=>{
+    const items=groups[stage]||[];
+    const t=items.reduce((s,l)=>s+(+l.budget||0),0);
+    return `<div class="pipe-col">
+      <div class="pipe-col-hdr"><span>${stage}</span>
+        <span style="background:var(--navy);color:#fff;border-radius:20px;padding:1px 7px;font-size:10px">${items.length}</span>
+      </div>
+      ${items.map(l=>`<div class="pipe-item">
+        <div style="font-weight:600;font-size:12px;margin-bottom:2px">${esc(l.name)}</div>
+        <div style="font-size:11px;color:var(--mu)">${esc(l.manager||'')}</div>
+        ${l.budget?`<div style="color:var(--navy);font-weight:600;font-size:12px">${fmtUSD(l.budget)}</div>`:''}
+      </div>`).join('')||'<div style="font-size:11px;color:var(--lt);padding:4px">ცარიელია</div>'}
+      ${t?`<div style="font-size:11px;font-weight:600;color:var(--navy);margin-top:6px;padding-top:6px;border-top:1px solid var(--bd)">სულ: ${fmtUSD(t)}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function renderManagers(){
+  document.getElementById('mgr-grid').innerHTML=managers.map(m=>{
+    const ml=leads.filter(l=>l.manager===m.name);
+    const sold=ml.filter(l=>l.status==='გაიყიდა').length;
+    const rev=ml.filter(l=>l.status==='გაიყიდა').reduce((s,l)=>s+(+l.budget||0),0);
+    const conv=ml.length?Math.round(sold/ml.length*100):0;
+    const ini=m.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    return `<div class="mgr-card">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="avatar" style="width:42px;height:42px;font-size:14px">${ini}</div>
+        <div><div style="font-size:14px;font-weight:600">${esc(m.name)}</div><div style="font-size:11px;color:var(--mu)">Sales Manager</div></div>
+      </div>
+      <div class="mgr-stats">
+        <div class="ms"><div class="ms-v">${ml.length}</div><div class="ms-l">ლიდები</div></div>
+        <div class="ms"><div class="ms-v">${sold}</div><div class="ms-l">გაყიდული</div></div>
+        <div class="ms"><div class="ms-v">${conv}%</div><div class="ms-l">Conversion</div></div>
+        <div class="ms"><div class="ms-v" style="font-size:13px">${rev?fmtUSD(rev):'—'}</div><div class="ms-l">შემოსავალი</div></div>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-secondary btn-sm" style="flex:1" onclick="editMgr('${m.id}','${esc(m.name)}')"><i class="ti ti-edit"></i> რედაქ.</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteMgr('${m.id}','${esc(m.name)}')"><i class="ti ti-trash"></i></button>
+      </div>
+    </div>`;
+  }).join('')+`<div class="add-card" onclick="openMgr()">
+    <i class="ti ti-user-plus"></i>
+    <div style="font-weight:600;font-size:13px">ახალი მენეჯერი</div>
+    <div style="font-size:11px">დააჭირე დასამატებლად</div>
+  </div>`;
+}
+window.openMgr=function(){
+  editingMgrId=null;
+  document.getElementById('mgr-modal-title').textContent='ახალი მენეჯერის დამატება';
+  document.getElementById('m-name').value='';
+  document.getElementById('mgr-note').style.display='none';
+  document.getElementById('mgr-modal').classList.add('open');
+  setTimeout(()=>document.getElementById('m-name').focus(),100);
+};
+window.editMgr=function(id,name){
+  editingMgrId=id;
+  document.getElementById('mgr-modal-title').textContent='მენეჯერის რედაქტირება';
+  document.getElementById('m-name').value=name;
+  document.getElementById('mgr-note').style.display='none';
+  document.getElementById('mgr-modal').classList.add('open');
+  setTimeout(()=>document.getElementById('m-name').focus(),100);
+};
+window.closeMgr=function(){document.getElementById('mgr-modal').classList.remove('open')};
+window.saveMgr=async function(){
+  const name=document.getElementById('m-name').value.trim();
+  if(!name){showToast('სახელი სავალდებულოა!');return;}
+  try{
+    if(editingMgrId){
+      const old=managers.find(m=>m.id===editingMgrId)?.name;
+      await setDoc(doc(db,'managers',editingMgrId),{name});
+      if(old&&old!==name){
+        const snap=await getDocs(collection(db,'leads'));
+        const batch=writeBatch(db);
+        snap.docs.filter(d=>d.data().manager===old).forEach(d=>batch.update(doc(db,'leads',d.id),{manager:name}));
+        await batch.commit();
+      }
+      showToast('✅ განახლდა');closeMgr();
+    } else {
+      if(managers.find(m=>m.name===name)){showToast('უკვე არსებობს!');return;}
+      await addDoc(collection(db,'managers'),{name});
+      const note=document.getElementById('mgr-note');
+      note.textContent='✅ '+name+' დაემატა! შეგიძლია კიდევ ერთი დაამატო.';
+      note.style.display='block';
+      document.getElementById('m-name').value='';
+      document.getElementById('m-name').focus();
+      showToast('✅ '+name+' დაემატა');
+    }
+  } catch(e){showToast('❌ '+e.message);}
+};
+window.deleteMgr=function(id,name){
+  const c=leads.filter(l=>l.manager===name).length;
+  document.getElementById('confirm-msg').textContent='მენეჯერის წაშლა?';
+  document.getElementById('confirm-sub').textContent=name+(c?` · ${c} ლიდი გაუნაწილებელი დარჩება`:'');
+  document.getElementById('confirm-ok').onclick=async()=>{
+    await deleteDoc(doc(db,'managers',id));showToast('🗑 წაიშალა');closeConfirm();
+  };
+  document.getElementById('confirm-modal').classList.add('open');
+};
+
+function renderReport(){
+  const total=leads.length,sold=leads.filter(l=>l.status==='გაიყიდა').length;
+  const rev=leads.filter(l=>l.status==='გაიყიდა').reduce((s,l)=>s+(+l.budget||0),0);
+  const tc=leads.filter(l=>getReminder(l)==='today').length;
+  const late=leads.filter(l=>getReminder(l)==='late').length;
+  document.getElementById('report-stats').innerHTML=
+    scHtml('სულ ლიდები',total,'')+scHtml('გაყიდული',sold,'#16a34a')+
+    scHtml('Conversion',total?Math.round(sold/total*100)+'%':'0%','')+
+    scHtml('შემოსავალი',fmtUSD(rev),'#1F4E78')+
+    scHtml('📞 დღეს',tc,tc?'#f59e0b':'')+scHtml('⚠️ გადაცილება',late,late?'#ef4444':'');
+
+  document.getElementById('report-status-list').innerHTML=statuses.map(s=>{
+    const c=leads.filter(l=>l.status===s.name).length;
+    const pct=total?Math.round(c/total*100):0;
+    return `<div class="dbar">
+      <span class="badge" style="background:${s.color}22;color:${s.color};border:1px solid ${s.color}44;width:168px;justify-content:center">${s.name}</span>
+      <div class="dbar-inner"><div class="dbar-fill" style="width:${pct}%;background:${s.color}"></div></div>
+      <span style="font-size:12px;font-weight:600;color:var(--navy);min-width:22px;text-align:right">${c}</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('report-mgr-list').innerHTML=managers.map(m=>{
+    const ml=leads.filter(l=>l.manager===m.name);
+    const ms=ml.filter(l=>l.status==='გაიყიდა').length;
+    const mr=ml.filter(l=>l.status==='გაიყიდა').reduce((s,l)=>s+(+l.budget||0),0);
+    const mc=ml.length?Math.round(ms/ml.length*100):0;
+    const ini=m.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <div class="avatar" style="width:32px;height:32px;font-size:11px">${ini}</div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:600">${esc(m.name)}</div>
+        <div style="font-size:11px;color:var(--mu)">${ml.length} ლიდი · ${ms} გაყიდული · ${mc}%</div>
+      </div>
+      <div style="font-size:13px;font-weight:600;color:var(--navy)">${mr?fmtUSD(mr):'—'}</div>
+    </div>`;
+  }).join('')||'<div class="empty" style="padding:14px"><i class="ti ti-user-off"></i><p>მენეჯერი არ არის</p></div>';
+
+  // District stats — only leads where district is set
+  const distLeads=leads.filter(l=>l.district&&l.district!=='—'&&l.district!=='');
+  const distMap={};
+  distLeads.forEach(l=>{distMap[l.district]=(distMap[l.district]||{count:0,sold:0,budget:0});distMap[l.district].count++;
+    if(l.status==='გაიყიდა'){distMap[l.district].sold++;distMap[l.district].budget+=(+l.budget||0);}});
+  const distArr=Object.entries(distMap).sort((a,b)=>b[1].count-a[1].count);
+  const distTotal=distLeads.length;
+  document.getElementById('report-dist-list').innerHTML=distArr.length?
+    `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px">
+    ${distArr.map(([dist,d])=>{
+      const pct=distTotal?Math.round(d.count/distTotal*100):0;
+      return `<div style="background:var(--bg);border-radius:var(--r);padding:13px 15px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
+          <span style="font-size:13px;font-weight:600">📍 ${esc(dist)}</span>
+          <span style="font-size:11px;font-weight:600;color:var(--navy)">${d.count} ლიდი</span>
+        </div>
+        <div class="dbar-inner" style="margin-bottom:7px"><div class="dbar-fill" style="width:${pct}%"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px">
+          <span style="color:var(--mu)">წილი: ${pct}%</span>
+          <span style="color:var(--s-tx)">✅ ${d.sold} გაყიდული${d.budget?' · '+fmtUSD(d.budget):''}</span>
+        </div>
+      </div>`;
+    }).join('')}
+    </div>`
+    :'<div class="empty" style="padding:14px"><i class="ti ti-map-off"></i><p>უბნის მონაცემი ჯერ არ არის</p></div>';
+}
+
+// SETTINGS
+function renderStatusSettings(){
+  const el=document.getElementById('status-list');if(!el) return;
+  el.innerHTML=statuses.map(s=>`<div class="set-item">
+    <span style="width:14px;height:14px;border-radius:50%;background:${s.color};flex-shrink:0;display:inline-block"></span>
+    <span>${esc(s.name)}</span>
+    <button class="btn-icon" style="padding:4px" onclick="deleteStatus('${s.id}','${esc(s.name)}')"><i class="ti ti-trash" style="font-size:13px;color:#ef4444"></i></button>
+  </div>`).join('');
+}
+window.addStatus=async function(){
+  const name=document.getElementById('new-status-name').value.trim();
+  const color=document.getElementById('new-status-color').value;
+  if(!name){showToast('სტატუსის სახელი შეიყვანე!');return;}
+  if(statuses.find(s=>s.name===name)){showToast('უკვე არსებობს!');return;}
+  await addDoc(collection(db,'statuses'),{name,color});
+  document.getElementById('new-status-name').value='';
+  showToast('✅ სტატუსი დაემატა');
+};
+window.deleteStatus=function(id,name){
+  document.getElementById('confirm-msg').textContent='სტატუსის წაშლა?';
+  document.getElementById('confirm-sub').textContent=name;
+  document.getElementById('confirm-ok').onclick=async()=>{
+    await deleteDoc(doc(db,'statuses',id));showToast('🗑 წაიშალა');closeConfirm();
+  };
+  document.getElementById('confirm-modal').classList.add('open');
+};
+
+function renderObjectSettings(){
+  const el=document.getElementById('object-list');if(!el) return;
+  el.innerHTML=objects.map(o=>`<div class="set-item">
+    <span>${esc(o.name)}</span>
+    <button class="btn-icon" style="padding:4px" onclick="deleteObject('${o.id}','${esc(o.name)}')"><i class="ti ti-trash" style="font-size:13px;color:#ef4444"></i></button>
+  </div>`).join('');
+}
+window.addObject=async function(){
+  const name=document.getElementById('new-object').value.trim();
+  if(!name){showToast('ობიექტის სახელი შეიყვანე!');return;}
+  if(objects.find(o=>o.name===name)){showToast('უკვე არსებობს!');return;}
+  await addDoc(collection(db,'objects'),{name});
+  document.getElementById('new-object').value='';
+  showToast('✅ ობიექტი დაემატა');
+};
+window.deleteObject=function(id,name){
+  document.getElementById('confirm-msg').textContent='ობიექტის წაშლა?';
+  document.getElementById('confirm-sub').textContent=name;
+  document.getElementById('confirm-ok').onclick=async()=>{
+    await deleteDoc(doc(db,'objects',id));showToast('🗑 წაიშალა');closeConfirm();
+  };
+  document.getElementById('confirm-modal').classList.add('open');
+};
+
+function renderDistrictSettings(){
+  const el=document.getElementById('district-list');if(!el) return;
+  el.innerHTML=districts.map(d=>`<div class="set-item">
+    <span>📍 ${esc(d.name)}</span>
+    <button class="btn-icon" style="padding:4px" onclick="deleteDistrict('${d.id}','${esc(d.name)}')"><i class="ti ti-trash" style="font-size:13px;color:#ef4444"></i></button>
+  </div>`).join('');
+}
+window.addDistrict=async function(){
+  const name=document.getElementById('new-district').value.trim();
+  if(!name){showToast('უბნის სახელი შეიყვანე!');return;}
+  if(districts.find(d=>d.name===name)){showToast('უკვე არსებობს!');return;}
+  await addDoc(collection(db,'districts'),{name});
+  document.getElementById('new-district').value='';
+  showToast('✅ უბანი დაემატა');
+};
+window.deleteDistrict=function(id,name){
+  document.getElementById('confirm-msg').textContent='უბნის წაშლა?';
+  document.getElementById('confirm-sub').textContent=name;
+  document.getElementById('confirm-ok').onclick=async()=>{
+    await deleteDoc(doc(db,'districts',id));showToast('🗑 წაიშალა');closeConfirm();
+  };
+  document.getElementById('confirm-modal').classList.add('open');
+};
+
+// ─── WHATSAPP ────────────────────────────────────────────────────────────────
+const WA_NUMBER = '995571231111';
+let waLeadId = null;
+let waTemplates = [];
+
+const WA_DEFAULT_TEMPLATES = [
+  {id:'t1', label:'👋 პირველი კავშირი',   text:'გამარჯობა {{სახელი}}! მე ვარ Zenith Group-ის წარმომადგენელი. გვესმა, რომ გაინტერესებთ უძრავი ქონება. გსურთ ვისაუბროთ?'},
+  {id:'t2', label:'🏠 ობიექტის შეთავაზება', text:'გამარჯობა {{სახელი}}! გვაქვს საინტერესო ობიექტი რომელიც შეიძლება მოგეწონოთ. გსურთ დეტალები?'},
+  {id:'t3', label:'📞 შეხვედრის დადასტური.', text:'გამარჯობა {{სახელი}}! გახსენებთ ჩვენს შეხვედრას. გელოდებით Zenith Group-ის ოფისში.'},
+  {id:'t4', label:'🔄 Follow-up',           text:'გამარჯობა {{სახელი}}! მინდოდა შეგეკითხო — გადაიფიქრეთ ჩვენი შეთავაზება? სიამოვნებით გიპასუხებთ!'},
+  {id:'t5', label:'✅ გაყიდვის შემდეგ',    text:'გამარჯობა {{სახელი}}! გიხაროდეთ ახალი სახლი! 🎉 Zenith Group-ის სახელით გისურვებთ ბედნიერებას!'},
+];
+
+// Load WA templates from Firestore or use defaults
+async function loadWATemplates(){
+  try{
+    const snap = await getDocs(collection(db,'wa_templates'));
+    if(snap.empty){
+      const batch = writeBatch(db);
+      WA_DEFAULT_TEMPLATES.forEach(t=>batch.set(doc(collection(db,'wa_templates')),t));
+      await batch.commit();
+      waTemplates = [...WA_DEFAULT_TEMPLATES];
+    } else {
+      waTemplates = snap.docs.map(d=>({id:d.id,...d.data()}));
+    }
+  } catch(e){ waTemplates = [...WA_DEFAULT_TEMPLATES]; }
+}
+
+function applyTmplText(tmplText, lead){
+  return tmplText.replace(/{{სახელი}}/g, lead.name||'');
+}
+
+function renderWATmplBtns(lead){
+  document.getElementById('wa-tmpl-btns').innerHTML = waTemplates.map((t,i)=>
+    `<button class="btn btn-secondary btn-sm" style="font-size:12px" onclick="applyWATmpl(${i})">${t.label}</button>`
+  ).join('');
+  if(waTemplates.length > 0){
+    document.getElementById('wa-text').value = applyTmplText(waTemplates[0].text, lead);
+  }
+}
+
+window.applyWATmpl = function(i){
+  const l = leads.find(x=>x.id===waLeadId); if(!l) return;
+  document.getElementById('wa-text').value = applyTmplText(waTemplates[i].text, l);
+};
+
+window.openWA = function(id){
+  const l = leads.find(x=>x.id===id); if(!l) return;
+  waLeadId = id;
+  const sc = statusColor(l.status);
+  document.getElementById('wa-client-info').innerHTML =
+    `<div style="display:flex;align-items:center;gap:10px">
+      <div style="flex:1"><strong style="font-size:14px">${esc(l.name)}</strong>
+        <span style="font-family:monospace;font-size:12px;color:var(--mu);margin-left:8px">${esc(l.phone)}</span>
+      </div>
+      ${l.status?`<span class="badge" style="background:${sc}22;color:${sc};border:1px solid ${sc}44">${esc(l.status)}</span>`:''}
+    </div>
+    ${l.object||l.budget?`<div style="font-size:12px;color:var(--mu);margin-top:4px">${l.object?esc(l.object):''}${l.budget?' · '+fmtUSD(l.budget):''}</div>`:''}`;
+  renderWATmplBtns(l);
+  document.getElementById('wa-modal').classList.add('open');
+};
+
+window.closeWA = function(){ document.getElementById('wa-modal').classList.remove('open'); };
+
+let _waTab = null;
+
+window.sendWA = async function(){
+  const l = leads.find(x=>x.id===waLeadId); if(!l) return;
+  const text = document.getElementById('wa-text').value.trim();
+  if(!text){ showToast('შეტყობინება ცარიელია!'); return; }
+  try{ await navigator.clipboard.writeText(text); } catch(e){}
+  const phone = l.phone.replace(/\D/g,'');
+  const url = `https://web.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}`;
+  // Reuse existing WA tab — if closed or missing, open a new one and remember it
+  if(!_waTab || _waTab.closed){
+    _waTab = window.open(url, 'crm_wa_tab');
+  } else {
+    _waTab.location.href = url;
+    _waTab.focus();
+  }
+  try{
+    const now = new Date().toLocaleString('ka-GE');
+    const prev = l.result||'';
+    const newResult = (prev?prev+'\n':'')+`[WA ${now}]: ${text.slice(0,80)}${text.length>80?'...':''}`;
+    await setDoc(doc(db,'leads',waLeadId),{result:newResult},{merge:true});
+  } catch(e){}
+  showToast('✅ WhatsApp Web გაიხსნა · ტექსტი კოპირებულია');
+  closeWA();
+};
+
+// WA Template manager
+window.openWATmpl = function(){
+  renderWATmplManagerList();
+  document.getElementById('wa-tmpl-modal').classList.add('open');
+};
+window.closeWATmpl = function(){
+  document.getElementById('wa-tmpl-modal').classList.remove('open');
+};
+function renderWATmplManagerList(){
+  document.getElementById('wa-tmpl-list').innerHTML = waTemplates.map((t,i)=>`
+    <div class="set-item" style="flex-direction:column;align-items:flex-start;gap:4px">
+      <div style="display:flex;align-items:center;width:100%;gap:8px">
+        <span style="flex:1;font-weight:600;font-size:13px">${esc(t.label)}</span>
+        <button class="btn-icon" style="padding:4px" onclick="deleteWATmpl('${t.id}')"><i class="ti ti-trash" style="font-size:13px;color:#ef4444"></i></button>
+      </div>
+      <div style="font-size:12px;color:var(--mu);line-height:1.5">${esc(t.text).slice(0,100)}${t.text.length>100?'...':''}</div>
+    </div>`).join('');
+}
+window.addWATmpl = async function(){
+  const label = document.getElementById('wa-new-label').value.trim();
+  const text  = document.getElementById('wa-new-text').value.trim();
+  if(!label||!text){ showToast('სახელი და ტექსტი სავალდებულოა!'); return; }
+  try{
+    const ref = await addDoc(collection(db,'wa_templates'),{label,text});
+    waTemplates.push({id:ref.id,label,text});
+    document.getElementById('wa-new-label').value='';
+    document.getElementById('wa-new-text').value='';
+    renderWATmplManagerList();
+    renderSettingsTmpl();
+    showToast('✅ შაბლონი დაემატა');
+  } catch(e){ showToast('❌ '+e.message); }
+};
+window.deleteWATmpl = async function(id){
+  try{
+    await deleteDoc(doc(db,'wa_templates',id));
+    waTemplates = waTemplates.filter(t=>t.id!==id);
+    renderWATmplManagerList();
+    renderSettingsTmpl();
+    showToast('🗑 შაბლონი წაიშალა');
+  } catch(e){ showToast('❌ '+e.message); }
+};
+
+window.closeConfirm=function(){document.getElementById('confirm-modal').classList.remove('open')};
+
+function renderSettingsTmpl(){
+  const el=document.getElementById('settings-tmpl-list');
+  if(!el) return;
+  if(!waTemplates.length){
+    el.innerHTML='<div style="font-size:12px;color:var(--mu);padding:10px 0">შაბლონი არ მოიძებნა</div>';
+    return;
+  }
+  el.innerHTML=waTemplates.map((t,i)=>`
+    <div class="set-item" style="flex-direction:column;align-items:flex-start;gap:3px">
+      <div style="display:flex;align-items:center;width:100%;gap:8px">
+        <span style="flex:1;font-weight:600;font-size:13px">${esc(t.label)}</span>
+        <button class="btn-icon" style="padding:4px" onclick="deleteWATmplFromSettings('${t.id}')"><i class="ti ti-trash" style="font-size:13px;color:#ef4444"></i></button>
+      </div>
+      <div style="font-size:12px;color:var(--mu);line-height:1.5">${esc(t.text).slice(0,110)}${t.text.length>110?'...':''}</div>
+    </div>`).join('');
+}
+
+window.addWATmplFromSettings=async function(){
+  const label=document.getElementById('st-new-label').value.trim();
+  const text=document.getElementById('st-new-text').value.trim();
+  if(!label||!text){showToast('სახელი და ტექსტი სავალდებულოა!');return;}
+  try{
+    const ref=await addDoc(collection(db,'wa_templates'),{label,text});
+    waTemplates.push({id:ref.id,label,text});
+    document.getElementById('st-new-label').value='';
+    document.getElementById('st-new-text').value='';
+    renderSettingsTmpl();
+    renderWATmplManagerList();
+    showToast('✅ შაბლონი დაემატა');
+  }catch(e){showToast('❌ '+e.message);}
+};
+
+window.deleteWATmplFromSettings=async function(id){
+  try{
+    await deleteDoc(doc(db,'wa_templates',id));
+    waTemplates=waTemplates.filter(t=>t.id!==id);
+    renderSettingsTmpl();
+    renderWATmplManagerList();
+    showToast('🗑 შაბლონი წაიშალა');
+  }catch(e){showToast('❌ '+e.message);}
+};
+let toastT;
+window.showToast=function(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),3200);
+};
+document.querySelectorAll('.modal-overlay').forEach(el=>{
+  el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open');});
+});
+
+async function init(){
+  try{
+    const [mS,sS,oS,dS]=await Promise.all([
+      getDocs(collection(db,'managers')),getDocs(collection(db,'statuses')),
+      getDocs(collection(db,'objects')),getDocs(collection(db,'districts')),
+    ]);
+    const batch=writeBatch(db);
+    let dirty=false;
+
+    // deduplicate managers
+    const seenMgr=new Set();
+    mS.docs.forEach(d=>{
+      const n=d.data().name;
+      if(!n||seenMgr.has(n)){batch.delete(doc(db,'managers',d.id));dirty=true;}
+      else seenMgr.add(n);
+    });
+    if(mS.empty) DEFAULT_MANAGERS.forEach(n=>batch.set(doc(collection(db,'managers')),{name:n}));
+
+    // deduplicate statuses
+    const seenSt=new Set();
+    sS.docs.forEach(d=>{
+      const n=d.data().name;
+      if(!n||seenSt.has(n)){batch.delete(doc(db,'statuses',d.id));dirty=true;}
+      else seenSt.add(n);
+    });
+    if(sS.empty) DEFAULT_STATUSES.forEach(s=>batch.set(doc(collection(db,'statuses')),s));
+
+    // deduplicate objects
+    const seenObj=new Set();
+    oS.docs.forEach(d=>{
+      const n=d.data().name;
+      if(!n||seenObj.has(n)){batch.delete(doc(db,'objects',d.id));dirty=true;}
+      else seenObj.add(n);
+    });
+    if(oS.empty) DEFAULT_OBJECTS.forEach(n=>batch.set(doc(collection(db,'objects')),{name:n}));
+
+    // deduplicate districts
+    const seenDist=new Set();
+    dS.docs.forEach(d=>{
+      const n=d.data().name;
+      if(!n||seenDist.has(n)){batch.delete(doc(db,'districts',d.id));dirty=true;}
+      else seenDist.add(n);
+    });
+    if(dS.empty) DEFAULT_DISTRICTS.forEach(n=>batch.set(doc(collection(db,'districts')),{name:n}));
+
+    if(dirty||mS.empty||sS.empty||oS.empty||dS.empty) await batch.commit();
+    await loadWATemplates();
+    startListeners();
+    document.getElementById('loading').style.display='none';
+    document.getElementById('app').style.display='flex';
+  } catch(e){
+    document.getElementById('loading').innerHTML=`<div style="text-align:center">
+      <i class="ti ti-wifi-off" style="font-size:36px;color:#ef4444;display:block;margin-bottom:12px"></i>
+      <div style="font-size:14px;color:#ef4444;font-weight:600">კავშირის შეცდომა</div>
+      <div style="font-size:12px;color:var(--mu);margin-top:6px">${e.message}</div>
+    </div>`;
+  }
+}
+init();
+
+// ═══════════════════════════════════════════════════════════
+// SALES MODULE — ცალკე namespace (zs_ prefix)
+// ═══════════════════════════════════════════════════════════
+const ZS = name => `zs_${name}`;
+
+let salesList=[], salesStaff=[], devList=[], invoiceList=[], zsCfg={};
+let editingSaleId=null, editingSSId=null, editingDevId=null;
+let currentInvSaleId=null, currentInvStageIdx=null;
+let earlyTargetId=null;
+let saleExcelData=[], saleExcelHeaders=[];
+let commStageCount=0, dealerStageCount=0;
+let zsCurrentUser=null; // logged-in sales staff user
+
+const ZSROLES={ceo:'CEO',director:'დირექტორი',head:'ფილიალის ხელმძღ.',manager:'გაყიდვ. მენეჯ.',developer:'დეველოპერი'};
+const fmtD=v=>v?'$'+Number(v).toLocaleString():'—';
+const paidComm=s=>(s.commStages||[]).filter(x=>x.paid).reduce((a,x)=>a+(+x.amount||0),0);
+const getDueStage=s=>{
+  if(s.status==='cancelled') return null;
+  const pct=(+s.paidAmount||0)/(+s.totalValue||1)*100;
+  return (s.commStages||[]).find(x=>!x.paid&&pct>=+x.threshold)||null;
+};
+const ZSROLE_CLASS={ceo:'priority-high',director:'priority-mid',head:'priority-low',manager:'s-new',developer:'s-no-answer'};
+
+// Returns sales visible to current sales-module user
+function getVisibleSales(){
+  if(!zsCurrentUser) return salesList; // not logged into sales module — show all
+  const role = zsCurrentUser.role;
+  if(role==='ceo'||role==='director') return salesList;
+  if(role==='developer'){
+    // find developer record linked to this staff user
+    const dev = devList.find(d=>d.staffId===zsCurrentUser.id);
+    if(!dev) return [];
+    return salesList.filter(s=>s.devId===dev.id);
+  }
+  return salesList;
+}
+
+// ── START SALES LISTENERS ──────────────────────────────────
+function startSalesListeners(){
+  import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js").then(({onSnapshot,query,orderBy,collection:col,doc,addDoc,setDoc,deleteDoc,getDocs,writeBatch:wb})=>{
+    onSnapshot(query(col(db,ZS('sales')),orderBy('createdAt','desc')),snap=>{
+      salesList=snap.docs.map(d=>({id:d.id,...d.data()}));
+      if(currentPage==='sales') renderSalesTable();
+      updateSalesBadge();
+    });
+    onSnapshot(col(db,ZS('staff')),snap=>{
+      salesStaff=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.fullName.localeCompare(b.fullName,'ka'));
+      if(currentPage==='salesstaff') renderSalesStaff();
+    });
+    onSnapshot(col(db,ZS('developers')),snap=>{
+      devList=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.name.localeCompare(b.name,'ka'));
+      populateDevFilter();
+      if(currentPage==='developers') renderDevelopers();
+    });
+    onSnapshot(query(col(db,ZS('invoices')),orderBy('createdAt','desc')),snap=>{
+      invoiceList=snap.docs.map(d=>({id:d.id,...d.data()}));
+      if(currentPage==='invoices') renderInvoices();
+    });
+    getDocs(doc(db,ZS('config'),'main')).catch(()=>{});
+    // seed CEO if empty
+    getDocs(col(db,ZS('staff'))).then(snap=>{
+      if(snap.empty){addDoc(col(db,ZS('staff')),{fullName:'CEO',username:'ceo',password:'ceo123',role:'ceo',mustChangePassword:true});}
+    });
+  });
+}
+
+function updateSalesBadge(){
+  const c=salesList.filter(s=>getDueStage(s)).length;
+  const b=document.getElementById('sales-due-badge');
+  if(b){b.textContent=c||'';b.style.display=c?'':'none';}
+}
+
+// ── ROLE & NAV VISIBILITY ────────────────────────────────
+let zsUser=null;
+function checkZsSession(){
+  const saved=sessionStorage.getItem('zs_u')||localStorage.getItem('zs_u');
+  if(saved){zsUser=JSON.parse(saved);applyZsNav();}
+}
+function applyZsNav(){
+  if(!zsUser) return;
+  const isElevated=zsUser.role==='ceo'||zsUser.role==='director';
+  const isHead=isElevated||zsUser.role==='head';
+  ['nav-sales','nav-invoices'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='';});
+  const ns=document.getElementById('nav-salesstaff');if(ns&&isHead) ns.style.display='';
+  const nd=document.getElementById('nav-developers');if(nd&&isElevated) nd.style.display='';
+}
+
+// ── RENDER SALES TABLE ────────────────────────────────────
+window.renderSalesTable=function(){
+  const q=(document.getElementById('ss-search')?.value||'').toLowerCase();
+  const fd=document.getElementById('ss-filter-dev')?.value||'';
+  const fst=document.getElementById('ss-filter-status')?.value||'';
+  const list=getVisibleSales().filter(s=>{
+    if(fd&&s.devId!==fd) return false;
+    if(fst&&s.status!==fst) return false;
+    if(q){const n=`${s.fname||''} ${s.lname||''}`.toLowerCase();if(!n.includes(q)&&!(s.aptNum||'').toLowerCase().includes(q)) return false;}
+    return true;
+  });
+
+  const totalV=list.reduce((a,s)=>a+(+s.totalValue||0),0);
+  const totalC=list.reduce((a,s)=>a+(+s.totalComm||0),0);
+  const paidC=list.reduce((a,s)=>a+paidComm(s),0);
+  const dueC=list.filter(s=>getDueStage(s)).length;
+  document.getElementById('sales-stats').innerHTML=
+    `<div class="sc"><div class="sc-label">სულ გაყიდვები</div><div class="sc-value">${list.length}</div></div>`+
+    `<div class="sc"><div class="sc-label">ჯამ. ღირ.</div><div class="sc-value" style="font-size:16px">${fmtD(totalV)}</div></div>`+
+    `<div class="sc"><div class="sc-label">ჯამ. საკომ.</div><div class="sc-value" style="color:#dc2626">${fmtD(totalC)}</div></div>`+
+    `<div class="sc"><div class="sc-label">მიღ. საკომ.</div><div class="sc-value" style="color:#16a34a">${fmtD(paidC)}</div></div>`+
+    `<div class="sc"><div class="sc-label">⚡ მოლოდინი</div><div class="sc-value" style="color:#ca8a04">${dueC}</div></div>`;
+
+  const tb=document.getElementById('sales-tbody');
+  if(!list.length){tb.innerHTML=`<tr><td colspan="11" style="text-align:center;padding:32px;color:var(--mu)">გაყიდვა ვერ მოიძებნა</td></tr>`;return;}
+  tb.innerHTML=list.map((s,i)=>{
+    const dev=devList.find(d=>d.id===s.devId);
+    const paid=+s.paidAmount||0; const tot=+s.totalValue||1;
+    const pct=Math.round(paid/tot*100);
+    const due=getDueStage(s);
+    const bg=due?'background:#fefce8':s.status==='cancelled'?'background:#fef2f2':'';
+    const tc=+s.totalComm||0; const pc=paidComm(s);
+    const stBadge=s.status==='cancelled'?'<span class="badge s-refused">გაუქმ.</span>':
+      s.status==='completed'?'<span class="badge s-sold">დასრ.</span>':
+      '<span class="badge s-call">აქტ.</span>';
+    return `<tr style="${bg}">
+      <td style="font-weight:700;color:var(--mu);font-size:12px">${s.saleNum||i+1}</td>
+      <td><strong>${esc(s.fname||'')} ${esc(s.lname||'')}</strong></td>
+      <td style="font-size:12px">${esc(s.aptNum||'—')}${s.floor?'<br><span style="color:var(--mu)">'+s.floor+' სართ.</span>':''}</td>
+      <td style="font-size:12px">${s.area?s.area+' მ²':'—'}</td>
+      <td style="font-weight:600">${fmtD(s.totalValue)}</td>
+      <td>
+        <div style="font-size:12px">${fmtD(paid)}</div>
+        <div style="height:6px;background:var(--bg);border-radius:10px;margin:3px 0;overflow:hidden"><div style="height:100%;width:${Math.min(pct,100)}%;background:var(--nl);border-radius:10px"></div></div>
+        <div style="font-size:11px;color:var(--mu)">${pct}%</div>
+      </td>
+      <td style="font-size:12px;font-weight:600">${pct}%</td>
+      <td style="font-size:12px">${esc(dev?.name||'—')}</td>
+      <td>
+        <div style="font-size:11px;color:#dc2626;font-weight:600">${fmtD(tc)}</div>
+        <div style="font-size:11px;color:#16a34a">✅ ${fmtD(pc)}</div>
+        <div style="font-size:11px;color:var(--mu)">დარჩ: ${fmtD(tc-pc)}</div>
+      </td>
+      <td>${stBadge}${due?'<br><span style="font-size:10px;color:#ca8a04;font-weight:600">⚡ საკომ.!</span>':''}</td>
+      <td>
+        <div style="display:flex;gap:3px;flex-wrap:wrap">
+          <button class="btn-icon" onclick="openSaleDetail('${s.id}')" title="დეტალები"><i class="ti ti-eye"></i></button>
+          <button class="btn-icon" onclick="openEarly('${s.id}')" title="წინსწრ. გადახდა"><i class="ti ti-coin"></i></button>
+          ${due?`<button class="btn btn-sm" style="background:#fefce8;color:#ca8a04;border:1px solid #fde047" onclick="openInvoiceModal('${s.id}')"><i class="ti ti-file-invoice"></i></button>`:''}
+          <button class="btn-icon" onclick="editSale('${s.id}')"><i class="ti ti-edit"></i></button>
+          <button class="btn-icon" onclick="cancelSale('${s.id}')" style="color:#ef4444" title="გაუქმება"><i class="ti ti-ban"></i></button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+};
+
+// esc() already defined above
+
+function populateDevFilter(){
+  const sel=document.getElementById('ss-filter-dev'); if(!sel) return;
+  const v=sel.value;
+  sel.innerHTML='<option value="">ყველა დეველოპ.</option>'+devList.map(d=>`<option value="${d.id}">${esc(d.name)}</option>`).join('');
+  sel.value=v;
+}
+
+// ── SALE DETAIL ─────────────────────────────────────────
+window.openSaleDetail=function(id){
+  const s=salesList.find(x=>x.id===id); if(!s) return;
+  const dev=devList.find(d=>d.id===s.devId);
+  const paid=+s.paidAmount||0; const tot=+s.totalValue||1;
+  const pct=(paid/tot*100).toFixed(1);
+  const tc=+s.totalComm||0; const pc=paidComm(s);
+  const stages=s.commStages||[];
+  let stHtml=stages.map((st,i)=>{
+    const due=!st.paid&&parseFloat(pct)>=+st.threshold;
+    const bg=st.paid?'background:#f0fdf4;border-color:#bbf7d0':due?'background:#fefce8;border-color:#fde047':'';
+    const label=st.paid?'✅ მიღებული':due?'⚡ მისაღებია':'⏳ მოლოდინში';
+    return `<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;margin-bottom:6px;border:1px solid var(--bd);${bg}">
+      <div style="flex:1;font-size:13px"><span style="font-weight:600">${st.threshold}%-ზე → ${fmtD(st.amount)}</span>
+        <span style="font-size:11px;color:var(--mu);margin-left:8px">${label}</span>
+        ${st.paidDate?`<span style="font-size:10px;color:var(--mu);margin-left:6px">მიღ: ${st.paidDate}</span>`:''}
+      </div>
+      ${due&&!st.paid?`<button class="btn btn-sm" style="background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0" onclick="markPaid('${id}',${i})">მიღებულია</button>`:''}
+      ${st.paid?`<button class="btn btn-sm" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;font-size:11px" onclick="unmarkPaid('${id}',${i})" title="გაუქმება">↩ გაუქმება</button>`:''}
+      ${due&&!st.paid?`<button class="btn btn-sm" style="background:#fefce8;color:#ca8a04;border:1px solid #fde047" onclick="openInvoiceForStage('${id}',${i})"><i class="ti ti-file-invoice"></i></button>`:''}
+    </div>`;
+  }).join('');
+
+  const sched=s.paySchedule||[];
+  let schedHtml=sched.length?`<div style="margin-top:14px">
+    <div style="font-size:11px;font-weight:600;color:var(--mu);margin-bottom:8px;text-transform:uppercase">გადახდების გრაფიკი</div>
+    <div style="max-height:180px;overflow-y:auto">
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead><tr style="background:var(--bg)"><th style="padding:6px 8px">თარიღი</th><th style="padding:6px 8px">თანხა</th><th style="padding:6px 8px">კუმ. %</th></tr></thead>
+      <tbody>${sched.map(r=>`<tr><td style="padding:6px 8px">${r.date||'—'}</td><td style="padding:6px 8px">${fmtD(r.amount)}</td><td style="padding:6px 8px">${(+r.cumPct||0).toFixed(1)}%</td></tr>`).join('')}</tbody>
+    </table></div></div>`:'';
+
+  let dealerHtml='';
+  if(s.hasDealer&&s.dealerName){
+    const ds=s.dealerStages||[];
+    const dp=ds.filter(x=>x.paid).reduce((a,x)=>a+(+x.amount||0),0);
+    const dt=+s.dealerTotal||0;
+    dealerHtml=`<div style="margin-top:14px;padding:12px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:var(--r)">
+      <div style="font-size:11px;font-weight:600;color:var(--mu);margin-bottom:8px;text-transform:uppercase">🤝 დილერი: ${esc(s.dealerName)}</div>
+      <div style="font-size:12px;margin-bottom:8px">ჯამ: ${fmtD(dt)} | გადახდ: <span style="color:#16a34a">${fmtD(dp)}</span> | დარჩ: <span style="color:#dc2626">${fmtD(dt-dp)}</span></div>
+      ${ds.map((x,i)=>{const due=!x.paid&&parseFloat(pct)>=+x.threshold;
+        return `<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;margin-bottom:5px;border:1px solid var(--bd);${x.paid?'background:#f0fdf4':due?'background:#fefce8':''}">
+          <div style="flex:1;font-size:12px;font-weight:600">${x.threshold}%-ზე → ${fmtD(x.amount)}</div>
+          ${due&&!x.paid?`<button class="btn btn-sm" style="background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0" onclick="markDealerPaid('${id}',${i})">გადახდ.</button>`:''}
+        </div>`;}).join('')}
+    </div>`;
+  }
+
+  document.getElementById('saledetail-title').textContent=`${s.fname} ${s.lname} — ${s.aptNum||''}`;
+  document.getElementById('saledetail-body').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;font-size:13px">
+      <div><span style="color:var(--mu)">ბინა:</span> <strong>${esc(s.aptNum||'—')}</strong></div>
+      <div><span style="color:var(--mu)">სართული:</span> <strong>${s.floor||'—'}</strong></div>
+      <div><span style="color:var(--mu)">ფართი:</span> <strong>${s.area?s.area+' მ²':'—'}</strong></div>
+      <div><span style="color:var(--mu)">მ² ფასი:</span> <strong>${fmtD(s.sqmPrice)}</strong></div>
+      <div><span style="color:var(--mu)">ჯამ. ღირ.:</span> <strong style="font-size:15px">${fmtD(s.totalValue)}</strong></div>
+      <div><span style="color:var(--mu)">დეველოპ.:</span> <strong>${esc(dev?.name||'—')}</strong></div>
+    </div>
+    <div style="padding:11px;background:var(--bg);border-radius:var(--r);margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+        <span style="font-size:13px;font-weight:600">გადახდ: ${fmtD(paid)} / ${fmtD(tot)}</span>
+        <span style="font-size:15px;font-weight:700;color:var(--nl)">${pct}%</span>
+      </div>
+      <div style="height:10px;background:#fff;border-radius:20px;overflow:hidden"><div style="height:100%;width:${Math.min(parseFloat(pct),100)}%;background:var(--nl);border-radius:20px"></div></div>
+    </div>
+    <div style="font-size:11px;font-weight:600;color:var(--mu);margin-bottom:8px;text-transform:uppercase">💰 საკომისიოს ეტაპები</div>
+    <div style="font-size:12px;display:flex;gap:14px;margin-bottom:10px">
+      <span>ჯამ: <strong style="color:#dc2626">${fmtD(tc)}</strong></span>
+      <span>მიღ: <strong style="color:#16a34a">${fmtD(pc)}</strong></span>
+      <span>დარჩ: <strong>${fmtD(tc-pc)}</strong></span>
+    </div>
+    ${stHtml}${dealerHtml}${schedHtml}
+    ${s.note?`<div style="margin-top:12px;font-size:12px;color:var(--mu);padding:9px;background:var(--bg);border-radius:var(--r)">${esc(s.note)}</div>`:''}
+  `;
+  document.getElementById('saledetail-modal').classList.add('open');
+};
+
+window.markPaid=async function(saleId,idx){
+  const s=salesList.find(x=>x.id===saleId); if(!s) return;
+  const stages=[...(s.commStages||[])];
+  stages[idx]={...stages[idx],paid:true,paidDate:new Date().toLocaleDateString('ka-GE')};
+  await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js").then(({doc,setDoc})=>setDoc(doc(db,ZS('sales'),saleId),{commStages:stages},{merge:true}));
+  showToast('✅ საკომისიო მოინიშნა');openSaleDetail(saleId);
+};
+window.unmarkPaid=async function(saleId,idx){
+  const s=salesList.find(x=>x.id===saleId); if(!s) return;
+  document.getElementById('confirm-msg').textContent='მიღებულის გაუქმება?';
+  document.getElementById('confirm-sub').textContent='ეტაპი დაბრუნდება მოლოდინის სტატუსში';
+  document.getElementById('confirm-ok').textContent='გაუქმება';
+  document.getElementById('confirm-ok').onclick=async()=>{
+    const stages=[...(s.commStages||[])];
+    stages[idx]={...stages[idx],paid:false,paidDate:null};
+    await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js").then(({doc,setDoc})=>setDoc(doc(db,ZS('sales'),saleId),{commStages:stages},{merge:true}));
+    showToast('↩ გაუქმდა');closeConfirm();openSaleDetail(saleId);
+  };
+  document.getElementById('confirm-modal').classList.add('open');
+};
+window.markDealerPaid=async function(saleId,idx){
+  const s=salesList.find(x=>x.id===saleId); if(!s) return;
+  const stages=[...(s.dealerStages||[])];
+  stages[idx]={...stages[idx],paid:true};
+  await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js").then(({doc,setDoc})=>setDoc(doc(db,ZS('sales'),saleId),{dealerStages:stages},{merge:true}));
+  showToast('✅ დილერის გადახდა');openSaleDetail(saleId);
+};
+window.cancelSale=function(id){
+  const s=salesList.find(x=>x.id===id); if(!s) return;
+  document.getElementById('confirm-msg').textContent='გაყიდვის გაუქმება?';
+  document.getElementById('confirm-sub').textContent=`${s.fname} ${s.lname}`;
+  document.getElementById('confirm-ok').onclick=async()=>{
+    await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js").then(({doc,setDoc})=>setDoc(doc(db,ZS('sales'),id),{status:'cancelled'},{merge:true}));
+    showToast('🚫 გაუქმდა');closeConfirm();
+  };
+  document.getElementById('confirm-modal').classList.add('open');
+};
+
+// ── EARLY PAYMENT ──────────────────────────────────────
+window.openEarly=function(id){
+  const s=salesList.find(x=>x.id===id); if(!s) return;
+  earlyTargetId=id;
+  document.getElementById('early-info').innerHTML=`<strong>${s.fname} ${s.lname}</strong><br>ახლა გადახდ: ${fmtD(s.paidAmount||0)}`;
+  document.getElementById('early-amount').value='';
+  document.getElementById('early-modal').classList.add('open');
+};
+window.saveEarly=async function(){
+  const s=salesList.find(x=>x.id===earlyTargetId); if(!s) return;
+  const add=+document.getElementById('early-amount').value;
+  if(!add||add<=0){showToast('თანხა შეიყვანე!');return;}
+  const newP=(+s.paidAmount||0)+add;
+  await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js").then(({doc,setDoc})=>setDoc(doc(db,ZS('sales'),earlyTargetId),{paidAmount:newP},{merge:true}));
+  showToast(`✅ ${fmtD(add)} დაემატა`);
+  document.getElementById('early-modal').classList.remove('open');
+};
+
+// ── SALE FORM ─────────────────────────────────────────
+window.openAddSale=function(){
+  editingSaleId=null;
+  document.getElementById('sale-modal-title').textContent='ახალი გაყიდვა';
+  ['sc-fname','sc-lname','sc-apt','sc-floor','sc-area','sc-sqmprice','sc-total','sc-totalcomm','sc-note'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('sc-devid').innerHTML=devList.map(d=>`<option value="${d.id}">${esc(d.name)}</option>`).join('');
+  document.getElementById('sc-mgrid').innerHTML=managers.map(m=>`<option value="${m.id}">${esc(m.name)}</option>`).join('');
+  document.getElementById('sc-hasdealer').checked=false;
+  document.getElementById('sc-dealer-fields').style.display='none';
+  commStageCount=0;dealerStageCount=0;
+  document.getElementById('sc-comm-body').innerHTML='';
+  document.getElementById('sc-dealer-stages').innerHTML='';
+  [{t:10,p:5},{t:20,p:10},{t:30,p:15},{t:50,p:20},{t:80,p:25},{t:100,p:25}].forEach(x=>addCommStage(x.t,x.p));
+  [{t:10},{t:20},{t:30}].forEach(x=>addDealerStage(x.t));
+  window._zsSchedule=null;
+  document.getElementById('sc-excel-status').textContent='';
+  document.getElementById('sc-excel-mapping').style.display='none';
+  document.getElementById('sale-modal').classList.add('open');
+};
+window.editSale=function(id){
+  const s=salesList.find(x=>x.id===id); if(!s) return;
+  editingSaleId=id;
+  document.getElementById('sale-modal-title').textContent='გაყიდვის რედაქ.';
+  document.getElementById('sc-fname').value=s.fname||'';
+  document.getElementById('sc-lname').value=s.lname||'';
+  document.getElementById('sc-apt').value=s.aptNum||'';
+  document.getElementById('sc-floor').value=s.floor||'';
+  document.getElementById('sc-area').value=s.area||'';
+  document.getElementById('sc-sqmprice').value=s.sqmPrice||'';
+  document.getElementById('sc-total').value=s.totalValue||'';
+  document.getElementById('sc-totalcomm').value=s.totalComm||'';
+  document.getElementById('sc-note').value=s.note||'';
+  document.getElementById('sc-devid').innerHTML=devList.map(d=>`<option value="${d.id}" ${d.id===s.devId?'selected':''}>${esc(d.name)}</option>`).join('');
+  document.getElementById('sc-mgrid').innerHTML=managers.map(m=>`<option value="${m.id}" ${m.id===s.mgrId?'selected':''}>${esc(m.name)}</option>`).join('');
+  commStageCount=0;document.getElementById('sc-comm-body').innerHTML='';
+  (s.commStages||[]).forEach(x=>addCommStage(x.threshold,x.pct));
+  document.getElementById('sc-hasdealer').checked=s.hasDealer||false;
+  document.getElementById('sc-dealer-fields').style.display=s.hasDealer?'':'none';
+  if(s.hasDealer){document.getElementById('sc-dealername').value=s.dealerName||'';document.getElementById('sc-dealertotal').value=s.dealerTotal||'';}
+  dealerStageCount=0;document.getElementById('sc-dealer-stages').innerHTML='';
+  (s.dealerStages||[]).forEach(x=>{addDealerStage(x.threshold);});
+  window._zsSchedule=s.paySchedule||null;
+  document.getElementById('sc-excel-status').textContent=s.paySchedule?`✅ ${s.paySchedule.length} ჩანაწერი ჩატვირთული`:'';
+  document.getElementById('sc-excel-mapping').style.display='none';
+  document.getElementById('sale-modal').classList.add('open');
+};
+window.saleCalcTotal=function(){
+  const a=+document.getElementById('sc-area').value||0;
+  const p=+document.getElementById('sc-sqmprice').value||0;
+  if(a&&p){document.getElementById('sc-total').value=(a*p).toFixed(0);updateCommAmounts();}
+};
+window.saleCalcSqm=function(){
+  const a=+document.getElementById('sc-area').value||0;
+  const t=+document.getElementById('sc-total').value||0;
+  if(a&&t){document.getElementById('sc-sqmprice').value=(t/a).toFixed(0);}
+  updateCommAmounts();
+};
+window.addCommStage=function(t='',p=''){
+  const idx=commStageCount++;
+  const tot=+document.getElementById('sc-totalcomm')?.value||0;
+  const amt=p&&tot?(tot*+p/100).toFixed(2):'';
+  const tr=document.createElement('tr');
+  tr.id=`cst-${idx}`;tr.innerHTML=`
+    <td style="padding:5px 6px"><input type="number" id="cst-t-${idx}" value="${t}" placeholder="10" style="width:75px" oninput="updateCommAmt(${idx})"></td>
+    <td style="padding:5px 6px"><input type="number" id="cst-p-${idx}" value="${p}" placeholder="%" style="width:65px" oninput="updateCommAmt(${idx})"></td>
+    <td style="padding:5px 6px"><input type="number" id="cst-a-${idx}" value="${amt}" placeholder="$" style="width:100px"></td>
+    <td style="padding:5px 6px"><button class="btn-icon" onclick="document.getElementById('cst-${idx}').remove()"><i class="ti ti-trash" style="font-size:13px;color:#ef4444"></i></button></td>`;
+  document.getElementById('sc-comm-body').appendChild(tr);
+};
+window.updateCommAmt=function(idx){
+  const tot=+document.getElementById('sc-totalcomm')?.value||0;
+  const p=+document.getElementById(`cst-p-${idx}`)?.value||0;
+  const aEl=document.getElementById(`cst-a-${idx}`);
+  if(tot&&p&&aEl) aEl.value=(tot*p/100).toFixed(2);
+};
+window.updateCommAmounts=function(){
+  document.querySelectorAll('[id^="cst-p-"]').forEach(el=>updateCommAmt(el.id.replace('cst-p-','')));
+};
+window.addDealerStage=function(t=''){
+  const idx=dealerStageCount++;
+  const div=document.createElement('div');
+  div.id=`dst-${idx}`;div.style.cssText='display:flex;align-items:center;gap:8px;margin-bottom:6px';
+  div.innerHTML=`<span style="font-size:12px;color:var(--mu)">%-ზე:</span>
+    <input type="number" id="dst-t-${idx}" value="${t}" placeholder="10" style="width:70px">
+    <span style="font-size:12px;color:var(--mu)">თანხა ($):</span>
+    <input type="number" id="dst-a-${idx}" placeholder="0" style="width:100px">
+    <button class="btn-icon" onclick="document.getElementById('dst-${idx}').remove()"><i class="ti ti-trash" style="font-size:13px;color:#ef4444"></i></button>`;
+  document.getElementById('sc-dealer-stages').appendChild(div);
+};
+
+// EXCEL
+window.previewSaleExcel=function(){
+  const file=document.getElementById('sc-excel')?.files[0]; if(!file) return;
+  if(!window.XLSX){showToast('Excel ბიბლიოთეკა არ ჩაიტვირთა — განაახლე გვერდი');return;}
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const wb=XLSX.read(e.target.result,{type:'binary'});
+    const ws=wb.Sheets[wb.SheetNames[0]];
+    const json=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+    if(!json.length){showToast('Excel ცარიელია');return;}
+    saleExcelHeaders=json[0].map(h=>String(h));
+    saleExcelData=json.slice(1);
+    const opts=saleExcelHeaders.map((h,i)=>`<option value="${i}">${esc(h)}</option>`).join('');
+    document.getElementById('sc-map-date').innerHTML=opts;
+    document.getElementById('sc-map-amount').innerHTML=opts;
+    const di=saleExcelHeaders.findIndex(h=>/date|თარიღ/i.test(h));
+    const ai=saleExcelHeaders.findIndex(h=>/amount|თანხ|გადა/i.test(h));
+    if(di>=0) document.getElementById('sc-map-date').value=di;
+    if(ai>=0) document.getElementById('sc-map-amount').value=ai;
+    document.getElementById('sc-excel-mapping').style.display='';
+    document.getElementById('sc-excel-status').textContent=`${saleExcelData.length} სტრ. ნაპოვნი`;
+  };
+  reader.readAsBinaryString(file);
+};
+window.confirmSaleMapping=function(){
+  const di=+document.getElementById('sc-map-date').value;
+  const ai=+document.getElementById('sc-map-amount').value;
+  const tot=+document.getElementById('sc-total').value||1;
+  let cum=0;
+  window._zsSchedule=saleExcelData.filter(r=>r[ai]).map(r=>{
+    cum+=(+r[ai]||0);
+    const rawDate=r[di];
+    let fmtDate='';
+    if(rawDate){
+      // Convert Excel serial number to date
+      if(typeof rawDate==='number'||(!isNaN(+rawDate)&&+rawDate>1000)){
+        const serial=+rawDate;
+        // Excel dates: serial 1 = Jan 1, 1900 (with leap year bug)
+        const d=new Date(Date.UTC(1899,11,30)+serial*86400000);
+        fmtDate=d.toLocaleDateString('ka-GE',{day:'2-digit',month:'2-digit',year:'numeric'});
+      } else {
+        fmtDate=String(rawDate);
+      }
+    }
+    return{date:fmtDate,amount:r[ai],cumPct:(cum/tot*100).toFixed(1)};
+  });
+  document.getElementById('sc-excel-status').textContent=`✅ ${window._zsSchedule.length} ჩანაწერი`;
+  document.getElementById('sc-excel-mapping').style.display='none';
+  showToast(`✅ ${window._zsSchedule.length} გადახდა ჩაიტვირთა`);
+};
+
+window.saveSale=async function(){
+  const fname=document.getElementById('sc-fname').value.trim();
+  const lname=document.getElementById('sc-lname').value.trim();
+  const apt=document.getElementById('sc-apt').value.trim();
+  if(!fname||!lname||!apt){showToast('სახელი, გვარი და ბინა სავალდებულოა!');return;}
+  const commStages=[];
+  document.querySelectorAll('[id^="cst-t-"]').forEach(el=>{
+    const i=el.id.replace('cst-t-','');
+    const t=+el.value||0;const p=+document.getElementById(`cst-p-${i}`)?.value||0;const a=+document.getElementById(`cst-a-${i}`)?.value||0;
+    if(t) commStages.push({threshold:t,pct:p,amount:a,paid:false});
+  });
+  const hasDealer=document.getElementById('sc-hasdealer').checked;
+  const dealerStages=[];
+  if(hasDealer){
+    document.querySelectorAll('[id^="dst-t-"]').forEach(el=>{
+      const i=el.id.replace('dst-t-','');
+      const t=+el.value||0;const a=+document.getElementById(`dst-a-${i}`)?.value||0;
+      if(t) dealerStages.push({threshold:t,amount:a,paid:false});
+    });
+  }
+  const data={
+    fname,lname,aptNum:apt,
+    floor:+document.getElementById('sc-floor').value||null,
+    area:+document.getElementById('sc-area').value||null,
+    sqmPrice:+document.getElementById('sc-sqmprice').value||null,
+    totalValue:+document.getElementById('sc-total').value||0,
+    totalComm:+document.getElementById('sc-totalcomm').value||0,
+    devId:document.getElementById('sc-devid').value,
+    mgrId:document.getElementById('sc-mgrid').value,
+    note:document.getElementById('sc-note').value,
+    commStages,hasDealer,
+    dealerName:hasDealer?document.getElementById('sc-dealername').value:'',
+    dealerTotal:hasDealer?(+document.getElementById('sc-dealertotal').value||0):0,
+    dealerStages,
+    paidAmount:0,status:'active',
+    paySchedule:window._zsSchedule||[],
+  };
+  const {doc,addDoc,setDoc,getDocs,collection:col}=await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+  try{
+    if(editingSaleId){
+      await setDoc(doc(db,ZS('sales'),editingSaleId),data,{merge:true});
+      showToast('✅ განახლდა');
+    } else {
+      const cSnap=await getDocs(col(db,ZS('meta')));
+      const cDoc=cSnap.docs.find(d=>d.id==='counter');
+      const last=cDoc?cDoc.data().saleNum||0:0;
+      const next=last+1;
+      await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js").then(({doc:d2,setDoc:s2})=>s2(d2(db,ZS('meta'),'counter'),{saleNum:next}));
+      data.saleNum=next;data.createdAt=Date.now();
+      await addDoc(col(db,ZS('sales')),data);
+      showToast(`✅ გაყიდვა #${next}`);
+    }
+    document.getElementById('sale-modal').classList.remove('open');
+    window._zsSchedule=null;
+  }catch(e){showToast('❌ '+e.message);}
+};
+
+// ── INVOICE ──────────────────────────────────────────
+window.openInvoiceModal=function(id){openInvoiceForStage(id,null);};
+window.openInvoiceForStage=function(id,idx){
+  const s=salesList.find(x=>x.id===id); if(!s) return;
+  currentInvSaleId=id;
+  const paid=+s.paidAmount||0;const tot=+s.totalValue||1;const pct=paid/tot*100;
+  if(idx===null){
+    const di=(s.commStages||[]).findIndex(x=>!x.paid&&pct>=+x.threshold);
+    currentInvStageIdx=di>=0?di:0;
+  } else currentInvStageIdx=idx;
+  document.getElementById('inv-rate').value='';
+  buildInvoice();
+  document.getElementById('invoice-modal').classList.add('open');
+};
+window.buildInvoice=function(){
+  const s=salesList.find(x=>x.id===currentInvSaleId); if(!s) return;
+  const rate=+document.getElementById('inv-rate').value||0;
+  const st=s.commStages?.[currentInvStageIdx]||{};
+  const dev=devList.find(d=>d.id===s.devId);
+  const tc=+s.totalComm||0;const pc=paidComm(s);const sa=+st.amount||0;
+  const today=new Date().toLocaleDateString('ka-GE');
+  const gelAmt=rate?`${(sa*rate).toLocaleString()} ₾`:'';
+  const cfg=zsCfg;
+  document.getElementById('inv-preview').innerHTML=`
+    <div style="background:#fff;border:1px solid var(--bd);border-radius:12px;padding:24px;font-size:13px;line-height:1.7" id="inv-content">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:14px;border-bottom:2px solid var(--navy);margin-bottom:16px">
+        <div>
+          <div style="font-size:18px;font-weight:700;color:var(--navy)">${esc(cfg.company||'ზენიტ ჰოლდინგი')}</div>
+          <div style="font-size:11px;color:var(--mu)">საიდ. კოდი: ${esc(cfg.tax||'—')}</div>
+          <div style="font-size:11px;color:var(--mu)">${esc(cfg.bank||'')} | ${esc(cfg.bankCode||'')} | ${esc(cfg.account||'')}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:14px;font-weight:600">ინვოისი</div>
+          <div style="font-size:12px;color:var(--mu)">თარიღი: ${today}</div>
+        </div>
+      </div>
+      <div style="margin-bottom:14px">
+        <div style="font-size:12px;color:var(--mu);margin-bottom:3px">კლიენტი:</div>
+        <div style="font-size:14px;font-weight:600">${esc(s.fname)} ${esc(s.lname)}</div>
+        <div style="font-size:12px">ბინა: ${esc(s.aptNum||'—')} | სართ: ${s.floor||'—'} | ფართი: ${s.area?s.area+' მ²':'—'}</div>
+        <div style="font-size:12px">დეველოპ.: ${esc(dev?.name||'—')}</div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;margin:12px 0">
+        <thead><tr style="background:var(--navy);color:#fff"><th style="padding:7px 9px;text-align:left;font-size:12px">მაჩვენებელი</th><th style="padding:7px 9px;text-align:left;font-size:12px">ოდენობა</th></tr></thead>
+        <tbody>
+          <tr><td style="padding:7px 9px;border-bottom:1px solid var(--bd)">ჯამური ღირებულება</td><td style="padding:7px 9px;border-bottom:1px solid var(--bd)">${fmtD(s.totalValue)}</td></tr>
+          <tr><td style="padding:7px 9px;border-bottom:1px solid var(--bd)">ჯამური საკომისიო</td><td style="padding:7px 9px;border-bottom:1px solid var(--bd);color:#dc2626">${fmtD(tc)}</td></tr>
+          <tr><td style="padding:7px 9px;border-bottom:1px solid var(--bd)">გადახდილი საკომ.</td><td style="padding:7px 9px;border-bottom:1px solid var(--bd);color:#16a34a">${fmtD(pc)}</td></tr>
+          <tr><td style="padding:7px 9px;border-bottom:1px solid var(--bd)">დარჩენილი საკომ.</td><td style="padding:7px 9px;border-bottom:1px solid var(--bd)">${fmtD(tc-pc)}</td></tr>
+          <tr style="background:#fefce8"><td style="padding:7px 9px;font-weight:600">ამ ეტაპზე მისაღები</td><td style="padding:7px 9px;font-weight:700;font-size:15px">${fmtD(sa)}${gelAmt?`<br><span style="font-size:11px;color:var(--mu)">${gelAmt} (კურსი: ${rate})</span>`:''}</td></tr>
+        </tbody>
+      </table>
+      <div style="text-align:right;font-weight:700;font-size:15px;color:var(--navy);margin-top:8px">სულ გადასახდელი: ${fmtD(sa)}${gelAmt?' / '+gelAmt:''}</div>
+    </div>`;
+};
+window.printInvoice=function(){
+  const el=document.getElementById('inv-content'); if(!el) return;
+  const w=window.open('','_blank');
+  w.document.write(`<html><head><meta charset="UTF-8"><title>ინვოისი</title><style>body{font-family:sans-serif;padding:20px}table{width:100%;border-collapse:collapse}th,td{padding:7px 9px;border:1px solid #ddd}th{background:#1F4E78;color:#fff}</style></head><body>${el.outerHTML}</body></html>`);
+  w.document.close();w.print();
+};
+window.archiveInvoice=async function(){
+  const s=salesList.find(x=>x.id===currentInvSaleId); if(!s) return;
+  const st=s.commStages?.[currentInvStageIdx]||{};
+  const dev=devList.find(d=>d.id===s.devId);
+  const {addDoc,collection:col}=await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+  await addDoc(col(db,ZS('invoices')),{
+    saleId:currentInvSaleId,client:`${s.fname} ${s.lname}`,devName:dev?.name||'',
+    threshold:st.threshold||'',amount:st.amount||0,
+    rate:+document.getElementById('inv-rate').value||0,
+    createdAt:Date.now(),
+  });
+  printInvoice();
+  showToast('✅ ინვოისი შენახულია');
+  document.getElementById('invoice-modal').classList.remove('open');
+};
+
+// ── INVOICES PAGE ─────────────────────────────────────
+function renderInvoices(){
+  const tb=document.getElementById('invoices-tbody'); if(!tb) return;
+  if(!invoiceList.length){tb.innerHTML=`<tr><td colspan="8" style="text-align:center;padding:32px;color:var(--mu)">ინვოისი ჯერ არ არის</td></tr>`;return;}
+  tb.innerHTML=invoiceList.map((inv,i)=>{
+    const dt=inv.createdAt?new Date(inv.createdAt).toLocaleDateString('ka-GE'):'—';
+    return `<tr>
+      <td style="font-weight:700">INV-${String(i+1).padStart(4,'0')}</td>
+      <td>${esc(inv.client||'—')}</td>
+      <td>${esc(inv.devName||'—')}</td>
+      <td>${inv.threshold?inv.threshold+'%':'—'}</td>
+      <td style="font-weight:600">${fmtD(inv.amount)}</td>
+      <td>${inv.rate||'—'}</td>
+      <td>${dt}</td>
+      <td><button class="btn-icon" onclick="delInvoice('${inv.id}')"><i class="ti ti-trash" style="font-size:13px;color:#ef4444"></i></button></td>
+    </tr>`;
+  }).join('');
+}
+window.delInvoice=function(id){
+  document.getElementById('confirm-msg').textContent='ინვოისის წაშლა?';
+  document.getElementById('confirm-sub').textContent='';
+  document.getElementById('confirm-ok').onclick=async()=>{
+    const {doc,deleteDoc}=await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    await deleteDoc(doc(db,ZS('invoices'),id));closeConfirm();showToast('🗑 წაიშალა');
+  };
+  document.getElementById('confirm-modal').classList.add('open');
+};
+
+// ── SALES STAFF ───────────────────────────────────────
+function renderSalesStaff(){
+  const grid=document.getElementById('salesstaff-grid'); if(!grid) return;
+  grid.innerHTML=salesStaff.map(s=>{
+    const ini=s.fullName.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    return `<div class="mgr-card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div class="avatar" style="width:40px;height:40px;font-size:13px">${ini}</div>
+        <div style="flex:1"><div style="font-weight:600">${esc(s.fullName)}</div>
+          <div style="font-size:11px;color:var(--mu)">@${esc(s.username)} | ${ZSROLES[s.role]||s.role}</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-secondary btn-sm" style="flex:1" onclick="editSalesStaff('${s.id}')"><i class="ti ti-edit"></i></button>
+        <button class="btn btn-danger btn-sm" onclick="delSalesStaff('${s.id}')"><i class="ti ti-trash"></i></button>
+      </div>
+    </div>`;
+  }).join('')+`<div class="add-card" onclick="openAddSalesStaff()">
+    <i class="ti ti-user-plus" style="font-size:26px"></i>
+    <div style="font-weight:600;font-size:13px">ახალი თანამშრომელი</div>
+  </div>`;
+}
+window.openAddSalesStaff=function(){
+  editingSSId=null;
+  document.getElementById('salesstaff-modal-title').textContent='ახალი თანამშრომელი';
+  ['ss-fullname','ss-username','ss-password'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('ss-role').value='manager';
+  document.getElementById('ss-pass-wrap').style.display='';
+  document.getElementById('ss-headid').innerHTML=salesStaff.filter(s=>s.role==='head').map(s=>`<option value="${s.id}">${esc(s.fullName)}</option>`).join('');
+  document.getElementById('salesstaff-modal').classList.add('open');
+  setTimeout(()=>document.getElementById('ss-fullname').focus(),100);
+};
+window.editSalesStaff=function(id){
+  const s=salesStaff.find(x=>x.id===id); if(!s) return;
+  editingSSId=id;
+  document.getElementById('salesstaff-modal-title').textContent='რედაქტ.';
+  document.getElementById('ss-fullname').value=s.fullName;
+  document.getElementById('ss-username').value=s.username;
+  document.getElementById('ss-role').value=s.role;
+  document.getElementById('ss-pass-wrap').style.display='none';
+  document.getElementById('ss-headid').innerHTML=salesStaff.filter(x=>x.role==='head').map(x=>`<option value="${x.id}" ${x.id===s.headId?'selected':''}>${esc(x.fullName)}</option>`).join('');
+  document.getElementById('salesstaff-modal').classList.add('open');
+};
+window.saveSalesStaff=async function(){
+  const fn=document.getElementById('ss-fullname').value.trim();
+  const un=document.getElementById('ss-username').value.trim();
+  const role=document.getElementById('ss-role').value;
+  if(!fn||!un){showToast('სახელი და username სავალდებულოა!');return;}
+  const data={fullName:fn,username:un,role};
+  if(role==='manager') data.headId=document.getElementById('ss-headid').value||'';
+  const {doc,addDoc,setDoc,collection:col}=await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+  try{
+    if(editingSSId){await setDoc(doc(db,ZS('staff'),editingSSId),data,{merge:true});showToast('✅ განახლდა');}
+    else{
+      const pass=document.getElementById('ss-password').value.trim();
+      if(!pass){showToast('პაროლი სავალდებულოა!');return;}
+      if(salesStaff.find(s=>s.username===un)){showToast('username უკვე არსებობს!');return;}
+      await addDoc(col(db,ZS('staff')),{...data,password:pass,mustChangePassword:true});
+      showToast('✅ '+fn+' დაემატა');
+    }
+    document.getElementById('salesstaff-modal').classList.remove('open');
+  }catch(e){showToast('❌ '+e.message);}
+};
+window.delSalesStaff=function(id){
+  const s=salesStaff.find(x=>x.id===id); if(!s) return;
+  document.getElementById('confirm-msg').textContent='თანამშრომლის წაშლა?';
+  document.getElementById('confirm-sub').textContent=s.fullName;
+  document.getElementById('confirm-ok').onclick=async()=>{
+    const {doc,deleteDoc}=await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    await deleteDoc(doc(db,ZS('staff'),id));closeConfirm();showToast('🗑 წაიშალა');
+  };
+  document.getElementById('confirm-modal').classList.add('open');
+};
+
+// ── DEVELOPERS ────────────────────────────────────────
+function renderDevelopers(){
+  const grid=document.getElementById('dev-grid'); if(!grid) return;
+  grid.innerHTML=devList.map(d=>`<div class="mgr-card">
+    <div style="font-size:15px;font-weight:600;margin-bottom:4px">${esc(d.name)}</div>
+    <div style="font-size:12px;color:var(--mu)">კოდი: ${esc(d.tax||'—')}</div>
+    <div style="font-size:12px;color:var(--mu);margin-bottom:10px">მეილი: ${esc(d.email||'—')}</div>
+    <div style="display:flex;gap:6px">
+      <button class="btn btn-secondary btn-sm" style="flex:1" onclick="editDev('${d.id}')"><i class="ti ti-edit"></i></button>
+      <button class="btn btn-danger btn-sm" onclick="delDev('${d.id}')"><i class="ti ti-trash"></i></button>
+    </div>
+  </div>`).join('')+`<div class="add-card" onclick="openAddDev()">
+    <i class="ti ti-building" style="font-size:26px"></i>
+    <div style="font-weight:600;font-size:13px">ახალი დეველოპერი</div>
+  </div>`;
+}
+window.openAddDev=function(){
+  editingDevId=null;
+  document.getElementById('dev-modal-title').textContent='ახალი დეველოპერი';
+  ['dev-name','dev-tax','dev-email'].forEach(id=>document.getElementById(id).value='');
+  populateDevStaffSelect('');
+  document.getElementById('dev-modal').classList.add('open');
+};
+function populateDevStaffSelect(selectedId){
+  const sel=document.getElementById('dev-staffid'); if(!sel) return;
+  const devStaff=salesStaff.filter(s=>s.role==='developer');
+  sel.innerHTML='<option value="">— არ არის —</option>'+devStaff.map(s=>`<option value="${s.id}" ${s.id===selectedId?'selected':''}>${esc(s.fullName)}</option>`).join('');
+}
+window.editDev=function(id){
+  const d=devList.find(x=>x.id===id); if(!d) return;
+  editingDevId=id;
+  document.getElementById('dev-modal-title').textContent='დეველოპ. რედაქ.';
+  document.getElementById('dev-name').value=d.name||'';
+  document.getElementById('dev-tax').value=d.tax||'';
+  document.getElementById('dev-email').value=d.email||'';
+  populateDevStaffSelect(d.staffId||'');
+  document.getElementById('dev-modal').classList.add('open');
+};
+window.saveDev=async function(){
+  const name=document.getElementById('dev-name').value.trim();
+  if(!name){showToast('დასახელება სავალდებულოა!');return;}
+  const staffSel=document.getElementById('dev-staffid');
+  const data={name,tax:document.getElementById('dev-tax').value,email:document.getElementById('dev-email').value,
+    staffId:staffSel?staffSel.value:''};
+  const {doc,addDoc,setDoc,collection:col}=await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+  try{
+    if(editingDevId){await setDoc(doc(db,ZS('developers'),editingDevId),data,{merge:true});showToast('✅ განახლდა');}
+    else{await addDoc(col(db,ZS('developers')),data);showToast('✅ '+name+' დაემატა');}
+    document.getElementById('dev-modal').classList.remove('open');
+  }catch(e){showToast('❌ '+e.message);}
+};
+window.delDev=function(id){
+  const d=devList.find(x=>x.id===id); if(!d) return;
+  document.getElementById('confirm-msg').textContent='დეველოპერის წაშლა?';
+  document.getElementById('confirm-sub').textContent=d.name;
+  document.getElementById('confirm-ok').onclick=async()=>{
+    const {doc,deleteDoc}=await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    await deleteDoc(doc(db,ZS('developers'),id));closeConfirm();showToast('🗑 წაიშალა');
+  };
+  document.getElementById('confirm-modal').classList.add('open');
+};
+
+// ── CONFIG ──────────────────────────────────────────
+window.openCfg=function(){
+  ['company','tax','bank','bankCode','account'].forEach(k=>{
+    const el=document.getElementById('cfg-'+k.toLowerCase());
+    if(el) el.value=zsCfg[k]||'';
+  });
+  document.getElementById('cfg-bankcode').value=zsCfg.bankCode||'';
+  document.getElementById('config-modal').classList.add('open');
+};
+window.saveCfg=async function(){
+  zsCfg={company:document.getElementById('cfg-company').value,tax:document.getElementById('cfg-tax').value,
+    bank:document.getElementById('cfg-bank').value,bankCode:document.getElementById('cfg-bankcode').value,
+    account:document.getElementById('cfg-account').value};
+  const {doc,setDoc}=await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+  await setDoc(doc(db,ZS('config'),'main'),zsCfg);
+  showToast('✅ რეკვიზიტები შენახულია');
+  document.getElementById('config-modal').classList.remove('open');
+};
+
+// ── PATCH showPage ──────────────────────────────────
+const _origShowPage=window.showPage;
+window.showPage=function(p){
+  if(['sales','invoices','salesstaff','developers'].includes(p)){
+    currentPage=p;
+    const allPages=['crm','today','pipeline','managers','report','settings','sales','invoices','salesstaff','developers'];
+    allPages.forEach(pg=>{const el=document.getElementById('page-'+pg);if(el)el.style.display=pg===p?'':'none';});
+    document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+    const navMap={'sales':'nav-sales','invoices':'nav-invoices','salesstaff':'nav-salesstaff','developers':'nav-developers'};
+    const navEl=document.getElementById(navMap[p]);if(navEl)navEl.classList.add('active');
+    const titles={sales:'გაყიდვების მოდული',invoices:'ინვოისების არქივი',salesstaff:'თანამ. (გაყიდვ.)',developers:'დეველოპერები'};
+    document.getElementById('page-title').textContent=titles[p];
+    const acts=document.getElementById('topbar-actions');
+    if(p==='sales') acts.innerHTML='<button class="btn btn-primary" onclick="openAddSale()"><i class="ti ti-plus"></i> ახალი გაყიდვა</button><button class="btn btn-secondary" onclick="openCfg()" style="margin-left:4px"><i class="ti ti-building"></i> რეკვ.</button><button class="btn btn-secondary" onclick="exportSalesExcel()" style="margin-left:4px"><i class="ti ti-file-spreadsheet"></i> ექსპ.</button>';
+    else if(p==='salesstaff') acts.innerHTML='<button class="btn btn-primary" onclick="openAddSalesStaff()"><i class="ti ti-plus"></i> ახალი</button>';
+    else if(p==='developers') acts.innerHTML='<button class="btn btn-primary" onclick="openAddDev()"><i class="ti ti-plus"></i> ახალი დეველოპ.</button>';
+    else acts.innerHTML='';
+    if(p==='sales') renderSalesTable();
+    else if(p==='invoices') renderInvoices();
+    else if(p==='salesstaff') renderSalesStaff();
+    else if(p==='developers') renderDevelopers();
+  } else {
+    _origShowPage(p);
+  }
+};
+
+// ── EXCEL EXPORT ─────────────────────────────────
+window.exportSalesExcel=function(){
+  if(!window.XLSX){showToast('Excel ბიბლიოთეკა იტვირთება, სცადე ისევ');return;}
+  const list=getVisibleSales();
+  if(!list.length){showToast('გაყიდვა არ არის');return;}
+  const rows=[['#','კლიენტი','ბინა','სართ.','ფართი','ჯამ.ღირ.($)','გადახდილი($)','%','დეველოპ.','ჯამ.საკომ.($)','მიღ.საკომ.($)','დარჩ.საკომ.($)','სტატუსი']];
+  list.forEach((s,i)=>{
+    const dev=devList.find(d=>d.id===s.devId);
+    const paid=+s.paidAmount||0;
+    const tot=+s.totalValue||1;
+    const pct=Math.round(paid/tot*100);
+    const tc=+s.totalComm||0;
+    const pc=paidComm(s);
+    rows.push([
+      s.saleNum||i+1,
+      `${s.fname||''} ${s.lname||''}`.trim(),
+      s.aptNum||'',
+      s.floor||'',
+      s.area||'',
+      +s.totalValue||0,
+      paid,
+      pct+'%',
+      dev?.name||'',
+      tc,pc,tc-pc,
+      s.status==='cancelled'?'გაუქმებული':s.status==='completed'?'დასრულებული':'აქტიური'
+    ]);
+  });
+  const ws=XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols']=[{wch:5},{wch:22},{wch:8},{wch:7},{wch:8},{wch:14},{wch:14},{wch:6},{wch:14},{wch:14},{wch:14},{wch:14},{wch:12}];
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'გაყიდვები');
+  XLSX.writeFile(wb,`Zenith_Sales_${new Date().toLocaleDateString('ka-GE').replace(/\//g,'-')}.xlsx`);
+  showToast('✅ Excel ჩამოიტვირთა');
+};
+
+// ── ADD XLSX SCRIPT ────────────────────────────────
+if(!document.getElementById('xlsx-script')){
+  const scr=document.createElement('script');
+  scr.id='xlsx-script';
+  scr.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+  document.head.appendChild(scr);
+}
+
+// ── SHOW SALES NAV if any leads with 'გაიყიდა' ────
+// Always show sales nav (directors can open it)
+['nav-sales','nav-invoices','nav-salesstaff','nav-developers'].forEach(id=>{
+  const el=document.getElementById(id);if(el)el.style.display='';
+});
+
+// Start sales listeners after main app starts
+startSalesListeners();
+
+</script>
+</body>
+</html>
