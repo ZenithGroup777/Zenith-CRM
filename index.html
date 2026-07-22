@@ -332,18 +332,18 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   </div>
   <nav class="nav">
     <div class="nav-sec">მთავარი</div>
-    <button class="nav-item active" onclick="showPage('crm')"><i class="ti ti-users"></i> კლიენტები</button>
-    <button class="nav-item" onclick="showPage('today')"><i class="ti ti-phone"></i> დღეს <span class="nbadge" id="today-badge">0</span></button>
-    <button class="nav-item" onclick="showPage('pipeline')"><i class="ti ti-layout-kanban"></i> Pipeline</button>
-    <button class="nav-item" onclick="showPage('managers')"><i class="ti ti-user-circle"></i> მენეჯერები</button>
-    <button class="nav-item" onclick="showPage('report')"><i class="ti ti-chart-bar"></i> ანგარიში</button>
+    <button class="nav-item active" id="nav-crm" onclick="showPage('crm')"><i class="ti ti-users"></i> კლიენტები</button>
+    <button class="nav-item" id="nav-today" onclick="showPage('today')"><i class="ti ti-phone"></i> დღეს <span class="nbadge" id="today-badge">0</span></button>
+    <button class="nav-item" id="nav-pipeline" onclick="showPage('pipeline')"><i class="ti ti-layout-kanban"></i> Pipeline</button>
+    <button class="nav-item" id="nav-managers" onclick="showPage('managers')"><i class="ti ti-user-circle"></i> მენეჯერები</button>
+    <button class="nav-item" id="nav-report" onclick="showPage('report')"><i class="ti ti-chart-bar"></i> ანგარიში</button>
     <div class="nav-sec">გაყიდვები</div>
     <button class="nav-item" id="nav-sales" onclick="showPage('sales')" style="display:none"><i class="ti ti-home-dollar"></i> გაყიდვების მოდული <span class="nbadge" id="sales-due-badge" style="display:none">!</span></button>
     <button class="nav-item" id="nav-invoices" onclick="showPage('invoices')" style="display:none"><i class="ti ti-file-invoice"></i> ინვოისები</button>
     <button class="nav-item" id="nav-salesstaff" onclick="showPage('salesstaff')" style="display:none"><i class="ti ti-users-group"></i> თანამ. (გაყიდვ.)</button>
     <button class="nav-item" id="nav-developers" onclick="showPage('developers')" style="display:none"><i class="ti ti-building"></i> დეველოპერები</button>
     <div class="nav-sec">კონფიგურაცია</div>
-    <button class="nav-item" onclick="showPage('settings')"><i class="ti ti-settings"></i> პარამეტრები</button>
+    <button class="nav-item" id="nav-settings" onclick="showPage('settings')"><i class="ti ti-settings"></i> პარამეტრები</button>
   </nav>
   <!-- CEO/director only: switch which company's CRM is shown -->
   <div class="brand-switch" id="brand-switch" style="display:none">
@@ -1814,8 +1814,11 @@ function getVisibleSales(){
   }
   return salesList;
 }
+// Developers can only VIEW the sales module — no add/edit/delete/payments
+function isDevReadOnly(){ return !!(zsCurrentUser && zsCurrentUser.role==='developer'); }
+function blockIfReadOnly(){ if(isDevReadOnly()){ showToast('👁 დეველოპერს აქვს მხოლოდ დათვალიერების უფლება'); return true; } return false; }
 
-// ── START SALES LISTENERS ──────────────────────────────────
+
 function startSalesListeners(){
   onSnapshot(query(collection(db,ZS('sales')),orderBy('createdAt','desc')),snap=>{
     salesList=snap.docs.map(d=>({id:d.id,...d.data()}));
@@ -1888,6 +1891,13 @@ function applyZsNav(){
   ['nav-sales','nav-invoices'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='';});
   const ns=document.getElementById('nav-salesstaff');if(ns&&isHead) ns.style.display='';
   const nd=document.getElementById('nav-developers');if(nd&&isElevated) nd.style.display='';
+
+  // Developers only see the sales module — no access to the standard leads/CRM pages
+  const isDeveloper = zsUser.role==='developer';
+  ['nav-crm','nav-today','nav-pipeline','nav-managers','nav-report','nav-settings'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.style.display = isDeveloper ? 'none' : '';
+  });
+  if(isDeveloper) showPage('sales');
 }
 
 // ── RENDER SALES TABLE ────────────────────────────────────
@@ -1947,10 +1957,12 @@ window.renderSalesTable=function(){
       <td>
         <div style="display:flex;gap:3px;flex-wrap:wrap">
           <button class="btn-icon" onclick="openSaleDetail('${s.id}')" title="დეტალები"><i class="ti ti-eye"></i></button>
+          ${isDevReadOnly() ? '' : `
           <button class="btn-icon" onclick="openEarly('${s.id}')" title="წინსწრ. გადახდა"><i class="ti ti-coin"></i></button>
           ${due?`<button class="btn btn-sm" style="background:#fefce8;color:#ca8a04;border:1px solid #fde047" onclick="openInvoiceModal('${s.id}')"><i class="ti ti-file-invoice"></i></button>`:''}
           <button class="btn-icon" onclick="editSale('${s.id}')"><i class="ti ti-edit"></i></button>
           <button class="btn-icon" onclick="cancelSale('${s.id}')" style="color:#ef4444" title="გაუქმება"><i class="ti ti-ban"></i></button>
+          `}
         </div>
       </td>
     </tr>`;
@@ -2043,14 +2055,14 @@ window.openSaleDetail=function(id){
   document.getElementById('saledetail-modal').classList.add('open');
 };
 
-window.markPaid=async function(saleId,idx){
+window.markPaid=async function(saleId,idx){if(blockIfReadOnly())return;
   const s=salesList.find(x=>x.id===saleId); if(!s) return;
   const stages=[...(s.commStages||[])];
   stages[idx]={...stages[idx],paid:true,paidDate:new Date().toLocaleDateString('ka-GE')};
   await setDoc(doc(db,ZS('sales'),saleId),{commStages:stages},{merge:true});
   showToast('✅ საკომისიო მოინიშნა');openSaleDetail(saleId);
 };
-window.unmarkPaid=async function(saleId,idx){
+window.unmarkPaid=async function(saleId,idx){if(blockIfReadOnly())return;
   const s=salesList.find(x=>x.id===saleId); if(!s) return;
   document.getElementById('confirm-msg').textContent='მიღებულის გაუქმება?';
   document.getElementById('confirm-sub').textContent='ეტაპი დაბრუნდება მოლოდინის სტატუსში';
@@ -2063,14 +2075,14 @@ window.unmarkPaid=async function(saleId,idx){
   };
   document.getElementById('confirm-modal').classList.add('open');
 };
-window.markDealerPaid=async function(saleId,idx){
+window.markDealerPaid=async function(saleId,idx){if(blockIfReadOnly())return;
   const s=salesList.find(x=>x.id===saleId); if(!s) return;
   const stages=[...(s.dealerStages||[])];
   stages[idx]={...stages[idx],paid:true};
   await setDoc(doc(db,ZS('sales'),saleId),{dealerStages:stages},{merge:true});
   showToast('✅ დილერის გადახდა');openSaleDetail(saleId);
 };
-window.cancelSale=function(id){
+window.cancelSale=function(id){if(blockIfReadOnly())return;
   const s=salesList.find(x=>x.id===id); if(!s) return;
   document.getElementById('confirm-msg').textContent='გაყიდვის გაუქმება?';
   document.getElementById('confirm-sub').textContent=`${s.fname} ${s.lname}`;
@@ -2082,7 +2094,7 @@ window.cancelSale=function(id){
 };
 
 // ── EARLY PAYMENT ──────────────────────────────────────
-window.openEarly=function(id){
+window.openEarly=function(id){if(blockIfReadOnly())return;
   const s=salesList.find(x=>x.id===id); if(!s) return;
   earlyTargetId=id;
   document.getElementById('early-info').innerHTML=`<strong>${s.fname} ${s.lname}</strong><br>ახლა გადახდილია: <b>${fmtD(s.paidAmount||0)}</b> / ${fmtD(s.totalValue)}`;
@@ -2106,7 +2118,7 @@ window.setEarlyMode=function(mode){
     btnAdd.style.background='';btnAdd.style.color='';
   }
 };
-window.saveEarly=async function(){
+window.saveEarly=async function(){if(blockIfReadOnly())return;
   const s=salesList.find(x=>x.id===earlyTargetId); if(!s) return;
   const setWrap=document.getElementById('early-set-wrap');
   let newP;
@@ -2127,7 +2139,7 @@ window.saveEarly=async function(){
 };
 
 // ── SALE FORM ─────────────────────────────────────────
-window.openAddSale=function(){
+window.openAddSale=function(){if(blockIfReadOnly())return;
   editingSaleId=null;
   document.getElementById('sale-modal-title').textContent='ახალი გაყიდვა';
   ['sc-fname','sc-lname','sc-apt','sc-floor','sc-area','sc-sqmprice','sc-total','sc-totalcomm','sc-note'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
@@ -2183,7 +2195,7 @@ window.saleCalcSqm=function(){
   if(a&&t){document.getElementById('sc-sqmprice').value=(t/a).toFixed(0);}
   updateCommAmounts();
 };
-window.addCommStage=function(t='',p=''){
+window.addCommStage=function(t='',p=''){if(blockIfReadOnly())return;
   const idx=commStageCount++;
   const tot=+document.getElementById('sc-totalcomm')?.value||0;
   const amt=p&&tot?(tot*+p/100).toFixed(2):'';
@@ -2195,16 +2207,16 @@ window.addCommStage=function(t='',p=''){
     <td style="padding:5px 6px"><button class="btn-icon" onclick="document.getElementById('cst-${idx}').remove()"><i class="ti ti-trash" style="font-size:13px;color:#ef4444"></i></button></td>`;
   document.getElementById('sc-comm-body').appendChild(tr);
 };
-window.updateCommAmt=function(idx){
+window.updateCommAmt=function(idx){if(blockIfReadOnly())return;
   const tot=+document.getElementById('sc-totalcomm')?.value||0;
   const p=+document.getElementById(`cst-p-${idx}`)?.value||0;
   const aEl=document.getElementById(`cst-a-${idx}`);
   if(tot&&p&&aEl) aEl.value=(tot*p/100).toFixed(2);
 };
-window.updateCommAmounts=function(){
+window.updateCommAmounts=function(){if(blockIfReadOnly())return;
   document.querySelectorAll('[id^="cst-p-"]').forEach(el=>updateCommAmt(el.id.replace('cst-p-','')));
 };
-window.addDealerStage=function(t=''){
+window.addDealerStage=function(t=''){if(blockIfReadOnly())return;
   const idx=dealerStageCount++;
   const div=document.createElement('div');
   div.id=`dst-${idx}`;div.style.cssText='display:flex;align-items:center;gap:8px;margin-bottom:6px';
@@ -2267,7 +2279,7 @@ window.confirmSaleMapping=function(){
   showToast(`✅ ${window._zsSchedule.length} გადახდა ჩაიტვირთა`);
 };
 
-window.saveSale=async function(){
+window.saveSale=async function(){if(blockIfReadOnly())return;
   const fname=document.getElementById('sc-fname').value.trim();
   const lname=document.getElementById('sc-lname').value.trim();
   const apt=document.getElementById('sc-apt').value.trim();
@@ -2474,7 +2486,7 @@ window.printInvoice=function(){
   w.document.write(`<html><head><meta charset="UTF-8"><title>ინვოისი</title><style>body{font-family:sans-serif;padding:20px}table{width:100%;border-collapse:collapse}th,td{padding:7px 9px;border:1px solid #ddd}th{background:#1F4E78;color:#fff}</style></head><body>${el.outerHTML}</body></html>`);
   w.document.close();w.print();
 };
-window.archiveInvoice=async function(){
+window.archiveInvoice=async function(){if(blockIfReadOnly())return;
   const s=salesList.find(x=>x.id===currentInvSaleId); if(!s) return;
   const st=s.commStages?.[currentInvStageIdx]||{};
   const dev=devList.find(d=>d.id===s.devId);
@@ -2508,7 +2520,7 @@ function renderInvoices(){
     </tr>`;
   }).join('');
 }
-window.delInvoice=function(id){
+window.delInvoice=function(id){if(blockIfReadOnly())return;
   document.getElementById('confirm-msg').textContent='ინვოისის წაშლა?';
   document.getElementById('confirm-sub').textContent='';
   document.getElementById('confirm-ok').onclick=async()=>{
@@ -2630,7 +2642,7 @@ window.editDev=function(id){
   populateDevStaffSelect(d.staffId||'');
   document.getElementById('dev-modal').classList.add('open');
 };
-window.saveDev=async function(){
+window.saveDev=async function(){if(blockIfReadOnly())return;
   const name=document.getElementById('dev-name').value.trim();
   if(!name){showToast('დასახელება სავალდებულოა!');return;}
   const staffSel=document.getElementById('dev-staffid');
@@ -2643,7 +2655,7 @@ window.saveDev=async function(){
     document.getElementById('dev-modal').classList.remove('open');
   }catch(e){showToast('❌ '+e.message);}
 };
-window.delDev=function(id){
+window.delDev=function(id){if(blockIfReadOnly())return;
   const d=devList.find(x=>x.id===id); if(!d) return;
   document.getElementById('confirm-msg').textContent='დეველოპერის წაშლა?';
   document.getElementById('confirm-sub').textContent=d.name;
@@ -2655,7 +2667,7 @@ window.delDev=function(id){
 };
 
 // ── CONFIG ──────────────────────────────────────────
-window.openCfg=function(){
+window.openCfg=function(){if(blockIfReadOnly())return;
   ['company','tax','bank','bankCode','account','director'].forEach(k=>{
     const el=document.getElementById('cfg-'+k.toLowerCase());
     if(el) el.value=zsCfg[k]||'';
@@ -2663,7 +2675,7 @@ window.openCfg=function(){
   document.getElementById('cfg-bankcode').value=zsCfg.bankCode||'';
   document.getElementById('config-modal').classList.add('open');
 };
-window.saveCfg=async function(){
+window.saveCfg=async function(){if(blockIfReadOnly())return;
   zsCfg={company:document.getElementById('cfg-company').value,tax:document.getElementById('cfg-tax').value,
     bank:document.getElementById('cfg-bank').value,bankCode:document.getElementById('cfg-bankcode').value,
     account:document.getElementById('cfg-account').value,
@@ -2687,7 +2699,9 @@ window.showPage=function(p){
     const titles={sales:'გაყიდვების მოდული',invoices:'ინვოისების არქივი',salesstaff:'თანამ. (გაყიდვ.)',developers:'დეველოპერები'};
     document.getElementById('page-title').textContent=titles[p];
     const acts=document.getElementById('topbar-actions');
-    if(p==='sales') acts.innerHTML='<button class="btn btn-primary" onclick="openAddSale()"><i class="ti ti-plus"></i> ახალი გაყიდვა</button><button class="btn btn-secondary" onclick="openCfg()" style="margin-left:4px"><i class="ti ti-building"></i> რეკვ.</button><button class="btn btn-secondary" onclick="exportSalesExcel()" style="margin-left:4px"><i class="ti ti-file-spreadsheet"></i> ექსპ.</button>';
+    if(p==='sales') acts.innerHTML= isDevReadOnly()
+      ? '<button class="btn btn-secondary" onclick="exportSalesExcel()"><i class="ti ti-file-spreadsheet"></i> ექსპ.</button>'
+      : '<button class="btn btn-primary" onclick="openAddSale()"><i class="ti ti-plus"></i> ახალი გაყიდვა</button><button class="btn btn-secondary" onclick="openCfg()" style="margin-left:4px"><i class="ti ti-building"></i> რეკვ.</button><button class="btn btn-secondary" onclick="exportSalesExcel()" style="margin-left:4px"><i class="ti ti-file-spreadsheet"></i> ექსპ.</button>';
     else if(p==='salesstaff') acts.innerHTML='<button class="btn btn-primary" onclick="openAddSalesStaff()"><i class="ti ti-plus"></i> ახალი</button>';
     else if(p==='developers') acts.innerHTML='<button class="btn btn-primary" onclick="openAddDev()"><i class="ti ti-plus"></i> ახალი დეველოპ.</button>';
     else acts.innerHTML='';
